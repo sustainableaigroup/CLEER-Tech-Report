@@ -122,10 +122,19 @@ format:
   numbering: none,
 )
 
+#outline(
+  title: [Contents],
+  depth: 2,
+)
+
+#pagebreak()
+
 #show heading.where(level: 1): it => block(above: 12pt, below: 14pt)[
-  #text(font: "DM Mono", size: 6.4pt, tracking: 0.7pt, fill: rgb("#819CA2"))[SECTION #context counter(heading).display("01")]
-  #v(4pt)
-  #text(font: "Inter", size: 25pt, weight: "medium", fill: rgb("#B8663B"))[#it.body]
+  #text(font: "Inter", size: 21pt, weight: "medium", fill: rgb("#B8663B"))[#it.body]
+]
+
+#show heading.where(level: 1): it => block(above: 12pt, below: 14pt)[
+  #text(font: "Inter", size: 21pt, weight: "medium", fill: rgb("#B8663B"))[#it.body]
 ]
 #show heading.where(level: 2): it => block(above: 13pt, below: 8pt)[
   #text(font: "Inter", size: 15pt, weight: "medium", fill: rgb("#2B6572"))[#it.body]
@@ -423,8 +432,6 @@ For models deployed on Ironwood rather than v6e, Google's disclosure predates Ir
 [^1]: H100 and A40 accelerators were also deployed for specific rounds of testing described in Section 3.
 
 [^2]: We note that some Anthropic models either lack a score on the Omniscience benchmark (such as Opus 3 and 4 and Haiku 3.5). Therefore, we rely on a fallback to their most recent Anthropic sibling, using their active parameter count (Opus 4 falls back to Opus 4.1, etc.).
-
-# References
 
 ::: {#refs}
 :::
