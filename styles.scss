@@ -52,7 +52,7 @@ h1, h2, h3, h4 {
 h1 {
   color: var(--saig-orange);
   font-weight: 500;
-  font-size: clamp(2.25rem, 5vw, 3.35rem);
+  font-size: clamp(1.75rem, 5vw, 3rem);
   line-height: 1.04;
   margin-top: .25rem;
   margin-bottom: 1.2rem;
@@ -393,7 +393,12 @@ blockquote {
 .csl-entry { margin-bottom: .85rem; }
 
 /* Long-document polish */
-main.content p { margin-bottom: 1rem; }
+main.content p { 
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+  margin-bottom: 1rem; 
+}
 main.content ul, main.content ol { margin-bottom: 1.15rem; }
 main.content hr { border-color: var(--saig-mist); margin: 3rem 0; }
 
@@ -407,6 +412,7 @@ main.content hr { border-color: var(--saig-mist); margin: 3rem 0; }
   .kpi-grid { grid-template-columns: 1fr; gap: .8rem; }
 
   .saig-cover {
+    text-align: left;
     min-height: auto;
     border-radius: 18px;
     padding: 1.55rem;
@@ -427,6 +433,7 @@ main.content hr { border-color: var(--saig-mist); margin: 3rem 0; }
   }
 
   .saig-cover h1 {
+    text-align: left;
     font-size: clamp(2.9rem, 12vw, 3.75rem);
     line-height: .98;
     margin: 1.8rem 0 .65rem;
@@ -439,6 +446,7 @@ main.content hr { border-color: var(--saig-mist); margin: 3rem 0; }
   }
 
   .saig-cover .subtitle {
+    text-align: left;
     font-size: 1.35rem;
     line-height: 1.3;
   }
@@ -448,6 +456,7 @@ main.content hr { border-color: var(--saig-mist); margin: 3rem 0; }
   }
 
   .saig-authors {
+    text-align: left;
     font-size: 1rem;
     margin-bottom: 1rem;
   }
