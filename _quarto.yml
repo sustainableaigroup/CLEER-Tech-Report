@@ -29,7 +29,6 @@ format:
     fig-cap-location: bottom
     code-fold: true
     format-links: false
-    include-after-body: report-polish.html
 
   typst:
     brand: _brand-pdf.yml
