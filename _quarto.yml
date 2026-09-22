@@ -3,6 +3,7 @@ project:
   output-dir: docs
   resources:
     - report-polish.js
+    - assets/SAIGFavicon.svg
 
 bibliography: references.bib
 reference-section-title: References
@@ -12,6 +13,8 @@ execute:
 
 format:
   html:
+    include-in-header: SAIGFavicon.html
+    include-after-body: report-polish.html
     brand: brand-html.yml
     theme: [brand, styles.scss]
     toc: true
