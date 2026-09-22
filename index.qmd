@@ -8,16 +8,17 @@ report:
   expansion: "Closed-model Latent Energy Estimation Range"
   subtitle: "An empirical framework for estimating the accelerator energy use of closed AI model inference."
   authors: "Nidhal Jegham, Chan Young Koh, Boris Gamazaychikov, and Sasha Luccioni"
-  version: "CLEER-METHOD-0926"
+  version: "CLEER-Text-0926"
   date: "29 SEPTEMBER 2026"
   pdf-file: "CLEER-Text-0926.pdf"
 
 bibliography: references.bib
+lightbox: true
 
 format:
   html: default
   typst:
-    output-file: "CLEER-METHOD-0926.pdf"
+    output-file: "CLEER-Text-0926.pdf"
 ---
 
 
