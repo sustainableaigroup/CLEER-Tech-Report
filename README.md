@@ -1,3 +1,5 @@
+WILL BE DELETED
+
 # SAIG Quarto + Typst Report Template
 
 A reusable reporting system for Sustainable AI Group. One `index.qmd` source renders to:
