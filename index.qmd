@@ -1,21 +1,29 @@
 ---
-pagetitle: "SAIG Technical Report"
+pagetitle: "CLEER Methodology"
 
 # TEMPLATE: update only this block for each new report.
 report:
   type: "TECHNICAL REPORT"
   title: "CLEER"
   expansion: "Closed-model Latent Energy Estimation Range"
-  subtitle: "Estimating the energy use of closed AI model inference."
-  authors: "Nidhal Jegham, Chan Young Koh, Sasha Luccioni"
-  version: "CLEER-TEXT-0826"
-  date: "29 SEPTEMBER 2026"
-  pdf-file: "CLEER-TEXT-0826.pdf"
+  subtitle: "An empirical framework for estimating the accelerator energy use of closed AI model inference."
+  authors: "Nidhal Jegham, Chan Young Koh, Boris Gamazaychikov, and Sasha Luccioni"
+  version: "CLEER-METHOD-0926"
+  date: "10 SEPTEMBER 2026"
+  pdf-file: "CLEER-METHOD-0926.pdf"
+
+bibliography: references.bib
+
+bibliography: references.bib
+
+bibliography: references.bib
+
+bibliography: references.bib
 
 format:
   html: default
   typst:
-    output-file: "CLEER-TEXT-0826.pdf"
+    output-file: "CLEER-METHOD-0926.pdf"
 ---
 
 
@@ -132,180 +140,295 @@ format:
 ]
 ```
 
-
 # Executive summary
 
 ::: {.lede}
-This is intentionally **illustrative content**, not a client analysis. Its purpose is to show the reporting system: one source file, technical visuals, source citations, a polished web layer, and a publication-quality PDF.
+The CLEER (Closed-model Latent Energy Estimation Range) methodology aims to estimate the accelerator energy consumption per output unit of different AI models, expressed as a mean and standard deviation, for prefill (cached and uncached), and output tokens. It does this by using a four-stage process that consists of: 1) Testing open-source models to gather ground truth regarding power draw and latency; 2) Mapping closed- and open-source models to find the closest proxy architectures; 3) Projecting based on benchmarked power, throughput, and performance characteristics; 4) Distributing the weighted proxies to estimate the range of energy per input and output unit. The goal of this approach is to bridge the gap between open- and closed-source energy estimation and to allow users and developers to make more informed decisions.
 :::
-
 
 ```{=typst}
 #grid(
   columns: (1fr, 1fr, 1fr),
   gutter: 12pt,
   [#block(height: 1.18in, fill: rgb("#F5F1E9"), radius: 10pt, inset: 14pt, stroke: (top: 4pt + rgb("#2B6572")))[
-    #text(font: "Inter", size: 17pt, weight: "semibold", fill: rgb("#033845"))[1 SOURCE]
+    #text(font: "Inter", size: 17pt, weight: "semibold", fill: rgb("#033845"))[4 STAGES]
     #v(8pt)
-    #text(font: "DM Mono", size: 6.4pt, fill: rgb("#4F747D"))[QUARTO MARKDOWN]
+    #text(font: "DM Mono", size: 6.4pt, fill: rgb("#4F747D"))[TEST · MAP · PROJECT · DISTRIBUTE]
   ]],
   [#block(height: 1.18in, fill: rgb("#FBF2EA"), radius: 10pt, inset: 14pt, stroke: (top: 4pt + rgb("#B8663B")))[
-    #text(font: "Inter", size: 17pt, weight: "semibold", fill: rgb("#033845"))[2 OUTPUTS]
+    #text(font: "Inter", size: 17pt, weight: "semibold", fill: rgb("#033845"))[1,700+ TESTS]
     #v(8pt)
-    #text(font: "DM Mono", size: 6.4pt, fill: rgb("#4F747D"))[HTML + TYPST PDF]
+    #text(font: "DM Mono", size: 6.4pt, fill: rgb("#4F747D"))[20+ OPEN MODELS]
   ]],
   [#block(height: 1.18in, fill: rgb("#EFF8F8"), radius: 10pt, inset: 14pt, stroke: (top: 4pt + rgb("#55BAC0")))[
-    #text(font: "Inter", size: 17pt, weight: "semibold", fill: rgb("#033845"))[∞ VERSIONS]
+    #text(font: "Inter", size: 17pt, weight: "semibold", fill: rgb("#033845"))[230M+ TOKENS]
     #v(8pt)
-    #text(font: "DM Mono", size: 6.4pt, fill: rgb("#4F747D"))[GIT TRACKED]
+    #text(font: "DM Mono", size: 6.4pt, fill: rgb("#4F747D"))[EMPIRICALLY BENCHMARKED]
   ]],
 )
 #v(10pt)
 ```
 
-AI training and deployment occur primarily in data centres, making electricity demand and data-centre infrastructure central to environmental assessment [@iea2025]. Research also shows that inference impacts can vary substantially across model and task choices [@luccioni2024]. A defensible assessment therefore needs to connect **AI activity → compute → energy → location → emissions**, while documenting assumptions and uncertainty.
-
 ```{=html}
 <div class="kpi-grid">
-  <div class="kpi"><div class="value">1 source</div><div class="label">Quarto Markdown</div></div>
-  <div class="kpi"><div class="value">2 outputs</div><div class="label">HTML + Typst PDF</div></div>
-  <div class="kpi"><div class="value">∞ versions</div><div class="label">Git tracked</div></div>
+  <div class="kpi"><div class="value">4 stages</div><div class="label">Test · Map · Project · Distribute</div></div>
+  <div class="kpi"><div class="value">1,700+ tests</div><div class="label">20+ open models</div></div>
+  <div class="kpi"><div class="value">230M+ tokens</div><div class="label">Empirically benchmarked</div></div>
 </div>
 ```
 
-::: {.content-visible when-format="html"}
+# Introduction: The Black Box of Energy Consumption
 
-| Demonstrated capability | Web report | PDF |
-|---|:---:|:---:|
-| SAIG typography and colors | ✓ | ✓ |
-| Hoverable citations | ✓ | — |
-| Numbered bibliography | ✓ | ✓ |
-| Technical SVG figures | ✓ | ✓ |
-| Equations and cross-references | ✓ | ✓ |
-| One-click PDF access | ✓ | n/a |
+As AI models mature from scientific prototypes into core components of systems used by millions of people, it becomes increasingly important to measure and track their energy demands and ensuing environmental impacts. However, accurately measuring an AI model's energy consumption and emissions is predicated on having access to both the hardware it is running on and information on where that hardware is located and how it is powered. While this kind of measurement can be straightforward for open-weights models like Qwen and Gemma, which can be run locally, it is impossible for proprietary, closed-source models like GPT-4o or Claude. Because these models are accessible only via user interfaces or APIs, they remain 'black boxes' regarding energy usage, making it difficult to make fully informed decisions, leaving developers, enterprises, and individual users in the dark with regard to the environmental consequences of their AI use.
 
-:::
+Our previous work, entitled “*How Hungry is AI? Benchmarking Energy, Water, and Carbon Footprint of LLM Inference*” (currently in press in Communications of the ACM), aimed to address this problem by leveraging TPS (tokens per second) and TTFT (time to first token) quantiles to estimate model latency, multiplying that latency by a power draw estimate based on the total number of model parameters, which enabled energy approximation even for closed-source models. However, a shortfall of this approach is that it attributed the same power draw to two models with similar parameter counts even if, in practice, they could be deployed on completely different hardware and software configurations. 
 
-::: {.callout-note title="What is real vs. illustrative?"}
-The sources and general methodological statements are real. All numerical findings in this demo are placeholders created solely to exercise the design system.^[For an actual engagement, these values would be generated from client activity data, model/hardware characterization, data-centre factors, and location-specific electricity data.]
-:::
+This is the gap that the CLEER (Closed-model Latent Energy Estimation Range) approach is designed to close, attributing power draw not as a fixed property of a model but as **a dynamic result of its deployment configuration** – considering factors like model latency, batch size, and hardware type in order to carry out its energy prediction. This approach leverages extensive empirical testing of the energy consumption of different open-source models across different configurations and accelerators, leveraging these experiments to estimate the energy needed for closed-source models.
 
-```{=typst}
-#pagebreak()
-```
+The CLEER approach is built on four stages:
 
-# Measurement approach
+1. **Testing** open-source models under controlled conditions across different realistic deployment conditions, gathering ground truth data connecting hardware configurations to actual measured power draw and latency;  
+2. **Mapping** closed- and open-source models to find the closest proxy architectures, based on a 2-step, K-nearest neighbors clustering approach;  
+3. **Projecting** from the proxy architecture’s benchmarked power and throughput curves, using the closed model’s own publicly observable performance characteristics ;   
+4. **Distributing** the weighted proxies to estimate the range of energy per input and output unit for each closed model.  
+   
 
-A useful reporting architecture separates **activity data** from **impact factors**. For inference, a simplified calculation can be expressed as:
+The output of this process is the **mean** and **standard deviation** of energy consumption per input (cached and uncached) and output unit.
 
-$$
-E_{\text{inference}} = A_{\text{tokens}} \times I_{\text{model}} \times PUE
-$$ {#eq-energy}
+# How do companies deploy AI at scale?
 
-and operational emissions as:
+Before creating any type of energy estimation framework, it is important to understand how AI models are designed and how companies deploy these models at scale. To start, while dense AI models were initially very common, the majority of recent frontier AI models are **sparse**; this distinction is important because while dense models activate all of the model’s layers and connections at query time, sparse models use a mixture-of-experts (MoE) approach, which activates only a subset of the model for any given query. This approach was popularized in 2023 by the Mixtral 8x7B model [@jiang2024mixtral] and has since become the most widely used architecture for large language model families such as DeepSeek [@deepseekai2025deepseekv3technicalreport], Qwen [@yang2025qwen3technicalreport], Gemma [@gemmateam2026gemma4technicalreport], and many others. 
 
-$$
-GHG_{\text{operational}} = E_{\text{inference}} \times CI_{\text{electricity}}
-$$ {#eq-ghg}
+## Active vs. Total Parameters
 
-This is deliberately simplified: a production methodology would define boundaries, allocation rules, hardware utilization, uncertainty, and the treatment of embodied impacts. GHG Protocol principles emphasize relevance, completeness, consistency, transparency, and accuracy when constructing emissions inventories [@ghgscope3].
+One can argue that the lack of transparency from companies regarding the number of parameters of their models makes it impossible to meaningfully estimate their true energy consumption by solely relying on open-source ones. In fact, as the field has progressed, we have started seeing models grow to an enormous total size, with open models like Kimi K3 reaching up to 2.8 trillion parameters, while the parameter count of closed models remains a closely-guarded secret. 
+
+However, total parameter count and active parameter count have not scaled in parallel. Looking across a pool of the top 43 open-source models scraped from [Artificial Analysis](https://artificialanalysis.ai/leaderboards/models), the total parameters range anywhere from 20 billion up to 2.8 trillion. Active parameters, on the other hand, stay confined to a much narrower band, somewhere between 3 billion and 104 billion parameters, regardless of how large the total model gets. Even the largest open-source model (Kimi K3, 2.8 trillion parameters) has an active parameter count of around 104 billion.
+
+This gap matters because of how MoE models actually run inference – in these types of models, each layer contains multiple specialist components known as experts; for each token in a query, the router chooses a small subset of experts to handle it, while the rest of the model sits unused for that particular token. So a model with 2.8 trillion total parameters might still only be doing the computational work of a 100-billion-parameter dense model on any given token. This is exactly why active parameters, not total parameters, are what actually drive compute and subsequent power draw. This is also why, instead of trying to use open-source models to estimate a closed model's total parameter count, we use them to estimate its **active parameter count**. 
 
 ::: {.figure-frame}
-![Illustrative measurement chain from AI activity to emissions.](assets/methodology-flow.svg){#fig-boundary width=100%}
+![Active versus total parameters for the top open-source models according to Artificial Analysis.](<assets/figure 1.png>){#fig-active-total width=100%}
 :::
 
-@tbl-boundary shows how a report can make assumptions explicit rather than burying them in prose.
+## Parallelization and Batching
 
-| Layer | Example input | Typical evidence | Demo treatment |
-|---|---|---|---|
-| AI activity | tokens, requests, GPU-hours | platform logs, vendor exports | In scope |
-| Model / hardware | model family, accelerator | provider disclosure, benchmark | In scope |
-| Data-centre overhead | PUE, cooling allocation | facility/provider data | Assumption |
-| Electricity | regional grid mix | grid datasets, contractual instruments | In scope |
-| Embodied impacts | hardware + construction | LCA / supplier data | Separate module |
+Generally speaking, processing text queries is split into two phases: **prefill** and **decode**. Prefilling is the first step, which processes the input prompt to generate the initial KV (key-value) cache values in addition to the first generated token. This phase is parallelized but *compute-bound* [@delavande2026], which means it is limited by pure mathematical calculation speed on the accelerator and usually leads to saturation in terms of compute and power. Therefore, accelerators such as GPUs are running near their maximum power draw and utilization during the prefilling process. On the contrary, the decoding stage generates the model’s response sequentially, token by token. This process is **memory-bound**, which means it is limited by how fast the hardware can stream model weights and cache data from memory. By default (i.e., with no optimization), this usually leads to low utilization, with a GPU generally running at 30-60% of its total capacity in terms of power draw and memory utilization.
 
-: Measurement boundary and evidence hierarchy {#tbl-boundary}
+Once a mixture-of-experts model gets large enough (i.e., hundreds of billions or even trillions of parameters), it is impossible to fit on a single accelerator, and even if it did fit in memory, it would then be too slow to respond to the number of queries users send. Therefore, in order to ensure the low latency and high throughput required by model users, they split the model across many accelerators. This is where **expert parallelism** comes in, and it is the piece that determines what a real deployment actually looks like on the hardware side.
 
-```{=typst}
-#pagebreak()
-```
+Expert parallelism (EP) refers to splitting the pool of experts inside an MoE model across multiple accelerators rather than keeping every expert on the same device. Each accelerator holds only a portion of the experts, and when a token gets routed to a particular expert, the computation for that token is sent to whichever accelerator that expert is on. The number attached to EP tells you how many accelerators the experts are being spread across: EP4 means the experts are split across 4, EP144 means they are split across 144, and so on.
 
-# Illustrative findings
+Most model providers, such as DeepSeek [@zuo2025servinglargelanguagemodels], deploy between two and four experts per accelerator in order to maximize latency and throughput. Some providers spread things out even further, running closer to 1 expert per accelerator to achieve a higher latency, while smaller models might run closer to 4. But the deployments cannot be thinned out endlessly – there is a practical limit to how far you can spread experts across accelerators before the communication overhead becomes too significant, or before you simply run out of experts to spread further. In practice, AI developers overlap this communication with computation via techniques such as overlap/scheduling strategies, so it runs in parallel with compute time rather than creating a bottleneck and resulting in idle compute time.
 
-The figure below is intentionally synthetic, but demonstrates how a result can be presented in a way that works identically in browser and PDF.
+As @fig-active-total shows, since the active parameter counts across these models tend to cluster together, with a 3- to 104-billion active parameter range across a very wide span of total model sizes, the actual deployment conditions across different hyperscalers end up looking fairly similar to each other, even if none of them match exactly. This distinction matters a lot for the rest of the pipeline, since it is exactly what our energy estimation work is trying to reproduce. Knowing roughly how many accelerators' worth of compute a single token actually draws on, whether that looks like DeepSeek's roughly 2 experts per accelerator, something closer to 1 expert, or 4 experts for a smaller model, lets us set up a model on our own hardware that mimics the real compute footprint per token, rather than guessing at it blindly.
+
+The final piece of this approach is the **batching** that model providers do in order to ensure that they can serve all incoming user requests. Given how much traffic these providers actually handle, serving hundreds of thousands of requests continuously on every instance, we can reasonably assume they are never running at a low batch size (i.e., a batch size from 1 to 8), which would leave expensive accelerators idle and waste precious computing resources. Instead, a realistic AI serving stack is designed to batch requests aggressively and to run at a high, sustained batch size as much as possible. This assumption matters for the rest of the AI pipeline, since it means that the batch size ranges we are aiming to mimic and the throughput and power curves we build around them should be weighted toward the higher end of what we benchmark, rather than toward the low batch size regime, which would only apply to a lightly used deployment.
+
+# Less is More: Pruning MoE Models for Realistic Inference
+
+Running a full MoE is time-consuming and computationally expensive, especially when it contains hundreds of experts and hundreds of billions of parameters. For instance, running the full DeepSeek V3 model parallelized across 144 GPUs [@zuo2025servinglargelanguagemodels] would cost roughly $500 per hour of inference, based on [recent cloud compute pricing](https://console.runpod.io/deploy?type=GPU&gpu=H200+SXM&count=1&template=runpod-torch-v240). However, because only a few experts process each token, we can prune the model from all experts to only the ones used, while still reflecting how the model processes tokens, for a fraction of the compute cost.
+
+## MoE Pruning Methodology
+
+For an MoE model that normally activates eight routed experts per token, we keep only those experts in each layer of the model during the pruning process. We then update the model configuration so that both the number of available experts and the number selected per token are equivalent to eight. More generally, we set both values to *k* (i.e., the first active expert count), so that every token now passes through all *k* remaining experts. The router gives each expert a significance score, which the model uses when combining their results. These scores are calculated separately for each token, allowing an expert to influence some tokens more than others. 
+
+@fig-pruning shows the pruning process using GPT-OSS 20B: first, we keep the selected experts and copy their weights, together with any additional data needed to use them, and keep the corresponding rows of the router’s weight matrix and any values related to the experts. By doing so, we hold the routing information aligned with the remaining experts. The tokenizers, attention blocks, norm and dense layers, and shared experts are carried over unchanged. In addition, we also check parts of the model that sit outside the main body of MoE layers – some multi token prediction (MTP) layers, for example, have their own routed experts, which need the same treatment as those in the main parts of the model. We inspect the tensors stored in each component, keep the selected experts, and update any routing information tied to them. The other parts of these components are copied without changes. 
+
+We then check the saved model layer by layer to make sure all required tensors are present – many models in their original form spread weights across several files, and pruning can change that layout. We therefore rebuild the index that tells the loader where to find each tensor. Each remaining weight and its associated scales must appear in the correct file and have matching index information. The number of experts we keep also follows each model’s original routing settings. Qwen3.5 uses ten routed experts per token [@qwen35], whereas MiniMax-M3 activates only four [@lai2026minimaxsparseattention]. GLM-4.7, GLM-5.2, Qwen3-235B, and DeepSeek V3 each use eight experts per token [@5team2025glm45agenticreasoningcoding; @glm5team2026glm5vibecodingagentic; @qwen3technicalreport; @deepseekai2025deepseekv3technicalreport]. Kimi K3 selects 16 from a pool of 896 experts in each MoE layer, so we keep 16 [@kimiteam2026kimik3openfrontier]. Shared experts, if they exist, are kept separately from these counts. 
 
 ::: {.figure-frame}
-![Illustrative normalized inference energy index. Values are not measured findings.](assets/energy-index.svg){#fig-energy width=100%}
+![The pruning process used by the CLEER methodology.](<assets/figure 2.png>){#fig-pruning width=100%}
 :::
 
-A result like @fig-energy would normally be accompanied by a traceable evidence table and sensitivity analysis. The underlying idea is supported by empirical research showing material differences in deployment energy across tasks and model architectures [@luccioni2024].
+In our experiments, we mapped each expert parallel rank to a single physical GPU (i.e., EP8 means using eight GPUs). For example, the GLM-4.7, which has eight remaining experts, assigns one routed expert from each MoE layer on each GPU in its EP8 configuration. During inference, token data is sent to the GPUs that hold the experts, and then their results are returned. This approach helps us see how expert computation performs when spread across multiple GPUs. 
 
-::: {.callout-important title="Key finding" icon=false}
-The executive reader should be able to understand the decision in thirty seconds; the technical reviewer should be able to trace every material assumption.
+::: {.figure-frame}
+![Total versus pruned size of open-source models, in gigabytes.](<assets/figure 3.png>){#fig-pruned-size width=100%}
 :::
 
-## Example sensitivity table
+The resulting pruned models let us measure model loading time, memory use, throughput, and latency while requiring a fraction of the initial compute. Furthermore, they preserve the model’s attention blocks, layer structures, quantization format, shared experts, and number of routed expert computations per token, allowing us to accurately measure the energy used for processing each token end-to-end through the model. In order to check the ability of our approach to mimic the original deployment conditions of MoE models, we validate it based on existing data for open-source models – we describe this below. 
 
-| Scenario | Normalized energy | Grid intensity (gCO₂e/kWh) | Resulting index |
-|---|---:|---:|---:|
-| Baseline frontier model | 1.00 | 400 | 1.00 |
-| Routed model mix | 0.68 | 400 | 0.68 |
-| Routed + lower-carbon region | 0.68 | 120 | 0.20 |
-| Task-specific model | 0.21 | 400 | 0.21 |
+## Pruning Approach Validation: DeepSeek V3 and GPT-OSS-20B
 
-The point of the table is not the sample values. It is the **reporting pattern**: inputs are visible, results are comparable, and the reader can distinguish model-efficiency effects from electricity-location effects.
+In order to validate that pruning is a representative proxy for full model deployment, we test it against two cases: DeepSeek V3 based on the publicly reported deployment conditions and GPT-OSS-20B, where we benchmark the full unpruned model and compare it to a pruned version.
 
-```{=typst}
-#pagebreak()
-```
+### Mirroring DeepSeek’s Deployment for Energy Estimation
 
-# Recommendations
+While few AI model developers provide the necessary details regarding the intricacies of in-production model deployment, the DeepSeek team published an extensive report regarding their deployment conditions in 2025 [@zuo2025servinglargelanguagemodels]. According to this, the DeepSeek V3 model runs with an expert parallelism degree of 144 for decoding, meaning its experts are distributed across 144 GPUs at once. DeepSeek V3's architecture has 256 routed experts per layer, plus 1 shared expert that every token always passes through, regardless of routing. Spreading 256 routed experts across 144 GPUs works out to roughly 2 experts sitting on each GPU, once you also account for some experts being duplicated across GPUs for load-balancing purposes. For prefilling, DeepSeek reports that they use 32 GPUs for this stage, meaning that each GPU holds around 8 routed experts and one shared.
 
-For a client-facing version, recommendations can be organized by decision horizon rather than by technical subsystem.
+This means that at DeepSeek's scale, during decoding, each individual GPU is really only ever responsible for holding and computing a small handful of experts, around 2, rather than anything close to the full model. And each time a token is generated, it is utilizing the compute equivalent of 4 GPUs (8 routed experts ÷ 2 experts-per-GPU), not the full 144 GPUs that the model is spread across. This holds per token, not per request, since routing is recomputed independently for every token generated, which means that multi-token responses touch different 4-GPU-equivalent slices of compute for each token, not one fixed slice for the whole request. Given that DeepSeek reports an average TPS per request of around 20 tokens per second and so that the aggregate TPS per GPU is 1,850 tokens per second, this leads to an average batch size of 370 for a node of 4 GPUs (multiplying 1850 by 4 to get the aggregate 4-GPU throughput). With a batch size of 370, you can never reach a TPS of 20 by deploying the full model on a DGX H100, since the VRAM simply cannot handle a model with so many parameters and such a high batch size.
 
-### 1. Establish a repeatable measurement baseline
+In order to measure empirical energy consumption in a realistic deployment setting, we prune the original model down to a smaller version that keeps only 8 experts, and we simulate DeepSeek's actual deployment by spreading those experts across 4 GPUs, with each GPU holding 2 routed experts plus 1 shared expert. In other words, since the generation of every token on the real deployment ends up drawing on the combined compute of 4 GPUs on average, running our pruned model this same way – spread across 4 GPUs – gives us a much closer stand-in for what DeepSeek's real deployment conditions actually look like, without requiring access to 144 GPUs (which we would need to test the unpruned version of the model).
 
-Define the activity-data schema, model taxonomy, data-quality hierarchy, and evidence retention requirements. This creates a consistent baseline that can be updated without rebuilding the analysis from scratch.
+Deploying the pruned model across 4 H100 GPUs and varying batch size from 32 to 512, total system throughput scales from 1,110 tokens per second up to 8,293 tokens per second at high batches, while per-request TPS ranges from 34.7 down to 16.1. At a batch size of 367, we reach a TPS per request of 20 tokens per second, at which the total system throughput is around 7,286 tokens per second or around 1,822 tokens per second per GPU. Comparing our data to DeepSeek’s reported data, the deviation in terms of throughput per GPU is less than 2 percent, while the batch size deviation is around 1 percent, which provides an initial validation that the pruning approach that we have developed is a representative proxy of actual hyperscaler deployment conditions. 
 
-### 2. Prioritize the highest-leverage routing decisions
-
-Use model- and task-level measurements to identify where a smaller or more specialized model can satisfy quality requirements at lower energy intensity. Research on deployment impacts suggests these choices can materially affect inference energy [@luccioni2024].
-
-### 3. Integrate results into corporate reporting
-
-Map material upstream AI-related emissions into the organization's established GHG accounting process, with explicit boundaries, assumptions, and exclusions consistent with applicable reporting practices [@ghgscope3].
-
-::: {.callout-tip title="Why GitHub helps"}
-Every methodological change, source update, chart revision, and client comment can be reviewed as a diff. The published HTML and PDF can then be regenerated automatically from the approved source.
+::: {.figure-frame}
+![Per-request decode throughput versus batch size for the pruned DeepSeek V3.](<assets/figure 4.png>){#fig-deepseek-throughput width=100%}
 :::
 
-```{=typst}
-#pagebreak()
-```
+### Validating the Proxy: Achieving Throughput Parity for GPT-OSS
 
-# Technical notes
+To further validate the pruning approach, we also deployed the GPT-OSS-20B model [@agarwal2025gpt] in two configurations: the original model, which has 32 experts with 4 active per token, and its pruned version, which retains only the 4 active experts. The aim of this experiment is to compare the throughput of both models – if pruning preserves the original model's generation behavior, the throughput per GPU should be comparable between the full model on 8 A40 GPUs (4 experts/GPU) and the pruned model on a single A40 GPU (4 experts/GPU). To ensure balanced utilization across the node, rather than activating specific experts while leaving others idle, we reroute requests to spread evenly across all experts. This reflects the assumption that hyperscalers deploy models in ways that keep most experts highly utilized, so our results represent average deployment conditions.
 
-## What the source tree controls
+While the full model spreads its total batch evenly across 8 GPUs, the pruned model runs its entire batch on a single GPU: for instance, a full model batch of 256 is split into 32 concurrent requests per GPU, while a pruned model batch of 256 puts all 256 requests on 1 GPU. To hold per-GPU concurrency constant across both setups, we scale the full model’s batch size to 8 times the pruned model’s batch size at each comparison so that each of the full model’s 8 GPUs and the pruned model’s single GPU are handling the same per-GPU request load. Across five matched batch pairs (pruned batch 32 to 384, full model 256 to 3072), per-GPU throughput ranges from 2,200 to 6,700 tokens per second in both configurations, with throughput matched within 7% deviation at most. While the pruned model usually has a higher throughput, we hypothesize that this is because it avoids the inter-GPU communication overhead the full model incurs – this overhead would be significantly reduced using the advanced optimization techniques that AI model providers use in practice.
 
-`_brand.yml`
-: Auto-detected base brand (colors and typography only; no logo).
+::: {.figure-frame}
+![Per-GPU throughput comparison between the pruned GPT-OSS-20B proxy (1 GPU, 4 experts) and the full model (8 GPUs, 4 experts per GPU).](<assets/figure 5.png>){#fig-gpt-oss-validation width=100%}
+:::
 
-`brand-html.yml`
-: HTML-specific brand, including the SAIG logo.
+These two case studies show that pruning an MoE model down and simulating its real deployment conditions, rather than trying to run the full model directly, reproduces the same throughput and latency behavior seen on the actual cloud deployment. Taken together, these results give us reasonable confidence to use the pruned setup as a stand-in for the full model in the rest of the pipeline, letting us estimate power draw and energy consumption under deployment conditions that would otherwise be inaccessible to us without access to hundreds of cloud-based GPUs at a high cost.
 
-`styles.scss`
-: Web-only polish: hero treatment, KPI cards, spacing, responsive behavior, and table details.
+# Testing: Empirical Measurement Methodology
 
-`typst/saig-header.typ`
-: PDF-only page-level treatment such as headers and footers.
+Once a model has been pruned down to its active parameter footprint, the next step of the CLEER approach is figuring out how it actually behaves under different deployment conditions, since, as explained above, no single expert parallelism level is an accurate representation of the deployment conditions across all hyperscalers. Therefore, instead of testing one configuration, we run each pruned model across a range of expert parallelism levels, from EP1 up through EP8, covering everything from a single accelerator holding the full pruned model to spreading it across 8 accelerators.
 
-`references.bib`
-: Central bibliography. Cite a source with `[@source-key]`; the browser version exposes the reference on hover.
+## Framework Design
 
-`assets/`
-: Brand-approved logo/background assets plus reusable SVG graphics.
+We benchmarked more than 20 pruned open-source models ranging from 20B (GPT-OSS-20B) to 2.8T (Kimi K3) across three primary GPUs (B300, B200, and H200), using seven different parallelization techniques, for a total of more than 1,700 tests and over 230 million tokens generated[^1]. For each pruned model, we ran a range of expert parallelism levels from EP1 to EP8, and for each expert parallelism level, we swept across a range of batch sizes: 32, 64, 128, 256, 384, and 512. This range is meant to cover everything from a lightly loaded AI deployment all the way up to the high, sustained batch sizes that we would expect from a hyperscaler handling heavy user traffic. On top of expert parallelism and batch size, we also varied the query length itself, running everything from short queries of around 100 tokens up through longer queries of around 1000 tokens. This matters because prefill and decode behave differently depending on how much input the model actually has to process before it starts generating, so a benchmark that only ever tested one query length would miss a real source of variation in token throughput. 
 
-## Production notes
+However, we must note that hyperscalers manage to keep the TPS quite consistent as you increase input, largely because their scale lets them absorb the resulting KV-cache growth in ways a smaller cluster can’t. This is done by deploying far more parallel replicas to spread concurrent load, reusing the cache from overlapping requests across many simultaneous users and, most importantly, by offloading an inactive KV-cache to fast external storage instead of holding it all in GPU memory. Our pruned setup cannot replicate these mechanisms without access to a whole cluster, so it tracks real deployment behavior closely at 100 input length, where KV-cache pressure is still small, but does not stay stable as you increase the input lengths, where these effects start to dominate.
 
-For a real report, numerical outputs should come from a reproducible data pipeline rather than manually entered tables. Quarto can execute Python or R during render, but keeping calculations separate from the layout layer is often useful for review and assurance.
+Each configuration, composed of a model, expert parallelism level, a quantization level, type and number of GPUs, query length, and batch size, is tested three times to average out run-to-run noise. Additionally, instead of running all of the tests back to back, the entire run plan is randomized so the three runs of each configuration are spread out. This avoids systematic bias from thermal drift, GPU state carried from a previous run, or any other systematic bias that sequential runs would bake into the results.
 
+## Methodological Approach
+
+All tests were served via the [vLLM library](https://docs.vllm.ai/en/v0.6.1/)– this gave us a consistent method to load the models and manage generation across various serving conditions and hardware configurations. In order to simulate the real-world inference scenario, we also tested continuous batching, which allows queries to be processed together as they arrive and manages the memory used to store attention information during generation. These features let us examine how throughput and response time change as more requests are processed concurrently. 
+
+We selected computation backends according to what each accelerator can support, the architecture of the model, and the quantization format. For instance, on Blackwell GPUs, several of our quantized MoE experiments used [FlashInfer’s TensorRT-LLM kernels](https://docs.flashinfer.ai/generated/flashinfer.fused_moe.trtllm_fp4_block_scale_moe.html), whereas on Hopper, depending on the operation and model, we used [compatible implementations](https://triton-lang.org/main/index.html) such as Triton, Marlin, and FlashInfer. These backends provide the GPU routines that carry out operations such as attention and expert layer computations, matching the backend to the model's numerical format in order to run the quantized models on the available hardware. For instance, our pruned version of GPT-OSS 20B run on H100 used Marlin to process weights that are compressed to 4-bit, which allows us to support FP4 weight storage on GPUs that lack native FP4 computation. 
+
+GPU-level energy consumption was logged using the [pynvml](https://pypi.org/project/pynvml/) package, sampling power draw and utilization independently on every GPU in the node every 100 milliseconds for the duration of each run. Each sample records a timestamp, elapsed time, GPU index, average, maximum, and minimum power draw, GPU and memory utilization, memory used, and temperature, and is joined against the benchmarking configuration that produced it, model, expert parallelism degree, and count, hardware, NVLink topology, and backend, together with the corresponding batch size, query length, and throughput metrics (prompt and completion tokens, decode tokens per second, per-request latency percentiles, and TTFT percentiles). This per-GPU, per-100ms resolution is what lets us isolate power draw at the individual configuration level rather than relying on node-level averages.
+
+## Exploring Throughput, Expert Parallelism, and Power Draw
+
+Across every batch size, we found that throughput increased monotonically with expert parallelism degree, but power draw scales considerably faster. At EP8, throughput relative to each configuration's own EP1 baseline ranges from 1.22x at batch size 32 up to 2.55x at batch size 384, with the scaling benefit growing steadily with batch size in between. Aggregate power draw over the same EP1 – EP8 range reached 4.28x, well above even the best throughput gain observed. This gap showcases that **tokens produced per watt consistently decline as expert parallelism increases,** regardless of how heavily the deployment is batched. Larger batch sizes narrow this efficiency gap, since they let each additional GPU do more useful work per unit of added power, but the underlying pattern is the same across the whole sweep, where adding GPUs to increase throughput comes at a power cost that grows faster than the throughput itself.  
+::: {.figure-frame}
+![Decode throughput relative to EP1, by batch size, versus peak system power draw (dashed) across expert-parallelism degrees EP1–EP8, aggregated equally across B200/B300/H200.](<assets/figure 6.png>){#fig-ep-throughput-power width=100%}
+:::
+
+# Mapping: Clustering Architectures
+
+While it is possible to measure the energy consumption of open models across a variety of types of hardware and optimization strategies, we cannot do the same for closed models, so the CLEER approach leverages proxies based on the empirical data gathered and the observable characteristics of the closed models themselves. Since we cannot inspect a closed model's architecture directly, a key idea of our approach is to find variables that reflect models’ hidden characteristics, such as total and active parameter count. The first step to this is building a reference model dataset, taking every open model in the dataset that has known total and active parameter counts, then estimating the closed model’s size based on observable characteristics, and finally carrying out clustering to find the top closest open models to each proprietary one.
+
+## Estimating Closed Model Size
+
+For 36 of the most commonly-used closed AI models, we estimate their active parameter count by using a nearest neighbor regression, weighting the five nearest neighbors by distance based on features that are actually observable for closed models, such as benchmark performance, price for input and output tokens, context window, etc. While using the top 5 correlated variables yields higher cross-validation accuracy than using a single metric (Check Comparison Table), that cross-validation is biased for a specific reason: pricing is a valid proxy for open-source models but breaks down for closed models, which tend to carry wider or narrower profit margins than open ones. In fact, these margins can reflect subsidization, strategic pricing, or platform lock-in rather than the actual cost of compute. 
+
+::: {.figure-frame}
+![Pearson correlation of the top 10 benchmark and pricing variables against total and active parameter count.](<assets/figure 7.png>){#fig-feature-correlation width=100%}
+:::
+
+The first stage of our clustering methodology is therefore grounded in architectural proxies, not financial signals. Benchmark scores present a similar problem, since certain results can be inflated by reasoning levels (Terminal Bench, SciCode), so we cannot rely on those either. For this reason, the first stage relies solely on accuracy on the [Omniscience benchmark](https://artificialanalysis.ai/evaluations/omniscience) (which has a 0.87 correlation with the number of active parameters), a benchmark that evaluates a model's knowledge retention, which reflects the model’s size and isn’t affected by reasoning level, alongside the model’s context window (0.47 correlation with active parameters) and launch date. This gives us an estimated active and total parameter count, standing in for what we cannot measure directly.
+
+## Finding Nearest (Open) Neighbors
+
+The second stage of our approach takes the estimated active parameter size and finds the five nearest open model donors we actually tested in a combined feature space of log active parameters, log total parameters, and omniscience score. We validate the weights with nested leave-one-out cross-validation (LOO-CV), where we hold out each donor, use a noisy size estimate from the others, and match it against proxies using that noisy estimate, exactly as a real closed model would. This is what the pipeline is actually judged on, and it currently holds at around 85%, meaning roughly 85 percent of donors have their true size fall within the range their five nearest proxies predict[^2].
+
+A small number of proprietary models, such as Claude Fable, have an Omniscience accuracy that exceeds every donor's own score – when this happens, both the size estimate and the proxy match switch from a plain inverse-distance weighting to a saturating concentration function where the weight on the single closest donor grows from an even 50/50 split right at the pool's ceiling toward full concentration as the model's score moves further past it, with the accuracy gap to the next-closest donor setting the scale for how quickly that concentration builds. In practice, this means an out-of-range model like Fable draws most of its estimate from a single best-matching proxy rather than blending across several, unlike an in-range model whose five neighbors typically contribute more evenly.
+
+| Closed model | Confidence | Donor rank | Open-model donor | Weight |
+|---|---:|---:|---|---:|
+| Claude 4.5 Haiku | 0.679 | 1 | Qwen3 30B | 0.322 |
+|  |  | 2 | gpt-oss-20b | 0.317 |
+|  |  | 3 | Qwen3 Next 80B A3B | 0.137 |
+|  |  | 4 | Gemma 4 26B A4B | 0.137 |
+|  |  | 5 | gpt-oss-120b | 0.087 |
+| GPT-5.5 | 0.467 | 1 | Kimi K3 | 0.567 |
+|  |  | 2 | DeepSeek V4 Pro | 0.185 |
+|  |  | 3 | Kimi K2.6 | 0.121 |
+|  |  | 4 | DeepSeek V3 0324 | 0.066 |
+|  |  | 5 | MiMo-V2.5-Pro | 0.061 |
+
+*Table 1  – A sample of closed models and their top 5 donors and corresponding confidence levels*
+
+The output of this step is a range of the five nearest donors, those donors with their individual weights, and a standardized distance score showing how far the model sits from its neighbors compared to how far a typical donor sits from its own peers. This donor score is what separates a robust match from a best guess picked from far away, which tends to happen for models whose real architecture falls outside the donor pool. These scores are what we use for the next step, which takes the nearest open neighbors that we found for each closed model and uses them to estimate the energy draw of each model.
+
+# Projecting: From Latency to Power
+
+Once a closed model has an architectural proxy based on the clustering approach, the projection stage is what turns that proxy into an actual estimate of power draw and energy consumption per request. The starting point is the empirical benchmarking data itself – the full grid of pruned models run across different expert parallelism levels, batch sizes, and query lengths described earlier. For each open model and at each expert parallelism level, we have real measured throughput and real measured total system power draw.
+
+## Fitting Latency and Power Curves
+
+For every model and expert parallelism level, we fit two curves across the measured batch sizes: one for **tokens per second per request** and one for **total system power draw**, both as smooth monotonic functions of batch size. These curves are only valid within the batch size range that was actually measured. In other words, we do not extrapolate to higher or lower batch sizes or different parallelizations. For TPS, we derive a single value, while for power draw, we derive minimum, maximum, and average, modeling it as a range for later calculations. We assume that a closed model's real architecture is reasonably well-represented by its five nearest open-source proxies in the clustering step, an assumption that holds better for some models than others, depending on how far that model's own architecture sits from the sparsity regime the donor pool was built from, which is exactly what the distance and confidence score reported alongside each match (and validated through cross-validation) is meant to flag. 
+
+::: {.figure-frame}
+![Per-request decode throughput and system power draw versus batch size for Kimi K2.6 and MiMo-V2.5-Pro across expert-parallelism degrees EP1–EP8 on B200, with Thermal Design Power (TDP) reference lines showing how far each configuration sits from its power ceiling.](<assets/figure 8.png>){#fig-latency-power-curves width=100%}
+:::
+
+By doing this projection, we assume that if a proxy expert parallelism configuration reaches a certain level of TPS, the batch size and, equivalently, the power draw per request implied by that configuration is, to a reasonable degree, representative of the batch size and power draw a closed model would need to reach that same TPS. This does not mean the proxy configuration is the actual configuration the closed model runs, only that **it is a plausible stand-in whose throughput and power relationship is architecturally comparable,** since the goal of the clustering approach is to find a proxy close enough in size and structure so that this substitution is defensible rather than arbitrary. We also assume that a closed provider's deployment is running at a high, sustained batch size, given the volume of traffic these companies serve, rather than at the low batch sizes (batch sizes of 1 to 8) that would only be realistic for a lightly used deployment or high-end percentiles. We use the average, maximum, and minimum power draw observed during testing to reflect total system behavior. While our simulated deployment conditions primarily represent decoding, and prefill is usually deployed on fewer GPUs given its compute-bound nature, the observed power range is assumed to be representative since it reflects both phases, making this a reasonable approximation rather than exact equivalence for the prefilling phase.
+
+Finally, for most models, we do not assume specific deployment on (e.g., Hopper or Blackwell accelerators) – we let the projection pick the configurations that can reach those specific latencies, with the assumption that models deployed on newer GPUs will have a TPS only achieved by models tested on the same GPUs. For models launched before 2025, we assume deployment on Hopper H200 because B200 and B300 were not deployed at scale yet [@blackwell2024]. For Google specifically, we assume deployment on Google's own TPU hardware rather than Nvidia GPUs, given Google's long-standing preference for its in-house accelerators for both training and serving its own models. This will be broken out into its own dedicated section in Appendix A rather than folded into the general GPU-based assumptions, since TPU power draw and throughput characteristics do not map onto the GPU-centric benchmarking framework used elsewhere in this document.
+
+## Projecting Closed Models’ TPS on Empirical Configurations
+
+With curves for TPS per request and power draw covering every combination of model, expert parallelism, and batch size, the next step connects this back to the closed model itself. [Artificial Analysis](https://artificialanalysis.ai/leaderboards/models) provides five percentile points describing the closed model's actual TPS, from the 5th  through the 95th percentile. For each of these five percentiles, we average out the TPS and TTFT across different query lengths (q100-1k-10k for input and q300-1000-1500 for output), and we take that target speed and check every proxy configuration to see whether it is even capable of producing it; if the target falls within what a given configuration's throughput curve can produce, we invert that curve to solve for the batch size that would have produced exactly that speed, then read the power draw off that configuration's power curve at that same batch size. Dividing by batch size converts that into power per individual request range. 
+
+In case the TTFT of a specific model is contaminated by reasoning time, we use the closest fallback model based on the specific family and company. For instance, if Opus 4.8 TTFT is contaminated, we fall back to Opus 4.7, 4.6, etc. If those variants are also contaminated, we fall back to the closest family by the same company, which is Sonnet. When more than one configuration is capable of producing a given percentile's target speed, their power-per-request estimates are combined with the weighted score assigned to each open model based on its proximity to the closed model during clustering.
+
+::: {.figure-frame}
+![Per-request decode throughput versus batch size for Claude Sonnet 4.5's two highest proxy donors (GLM-4.7 and MiMo-V2.5-Pro), across expert-parallelism degree and hardware, with target percentile speeds overlaid as dashed lines.](<assets/figure 9.png>){#fig-sonnet-donor-curves width=100%}
+:::
+
+::: {.figure-frame}
+![Donor-weighted average deployment batch size and power draw per request needed to match Claude Sonnet 4.5's throughput at each percentile (P5–P75; P95 unmatched).](<assets/figure 10.png>){#fig-sonnet-projection width=100%}
+:::
+
+# Distributing: From Power Draw to Energy per Token
+
+After deriving the power per request at each of the five percentiles reported by Artificial Analysis, the last step of our approach converts that number into energy per input and output token. For model output, the energy per token is straightforward: $E_{\text{output/token}} = P_{\text{mean}} \times (1/\mathrm{TPS}) / 3600$, using the measured-average power curve and the percentile's TPS directly. For input, we don't use TTFT directly, since TTFT comes with a fixed per-request startup cost alongside the actual per-token prefill cost. Instead, we regress TTFT against query length across the three query-length buckets and take the slope that represents prefill time per input token – the slope therefore isolates the marginal, per-token component that energy-per-input-token requires: the formula of energy per input token is therefore $E_{\text{input/token}} = P_{\text{mean}} \times s_{\mathrm{TTFT}} / 3600$, similar to the output side.
+
+This is computed at each of the five percentiles separately and then aggregated, while means are combined across percentiles using a weighted average based on normal-distribution percentile weights. The median is weighted most heavily, and the tails weighted least, and standard deviations are pooled as the square root of the mean of variances. For energy per cached input token, we rely on the ratio between uncached and cached input tokens to infer the energy cost as a proxy. For every closed model, this stage outputs energy per input token (cached and uncached) and energy per output token, each as a mean and standard deviation rather than a single number. Each result also comes with the number of proxy configurations matched and how far the closed model sat from its clustering neighbors.
+
+::: {.figure-frame}
+![Output, input, and cached-input energy per token (log scale) for Kimi K3 (measured, EP8/B300/batch=384) versus Gemini 3.7 Flash and Claude Sonnet 4.5 (estimated), with 1.96 standard deviations shown where available and cached input applying a 10% price ratio.](<assets/figure 11.png>){#fig-energy-per-token width=100%}
+:::
+
+# Conclusion
+
+The field of AI is growing rapidly, and it is important for researchers, developers, and decision makers to be aware of the energy demands and environmental impacts of model deployment. Building upon extensive energy benchmarking of open-source models and a series of statistical approximations, we have created CLEER, an approach that is able to provide empirically-informed energy efficiency estimates for all of the major proprietary AI models. Instead of predicting an exact number, we instead estimate a range, allowing different members of the ecosystem to choose the degree of precision and assumptions that best reflect the downstream usage that they will make of them. We will describe how CLEER can be applied in practice by taking accelerator energy and converting it to full facility energy and carbon emissions in our accompanying document (forthcoming). Taken together, our goal is to move the state of the art in AI energy estimates forward by leveraging the most extensive AI energy benchmarking carried out to date to allow the AI community to make more informed decisions. 
+
+## Appendix A – Gemini Models Approach {#appendix-a---gemini-models-approach}
+
+Google’s Gemini models receive a separate treatment from the rest of the pipeline because the clustering-and-projection approach described above depends on two important sources of information that are not currently available for TPUs (Tensor Processing Units), Google’s proprietary accelerators, which are used to deploy Gemini models: (1) an open-donor pool benchmarked on the same hardware and (2) real TPS curves from a power sweep. Instead of clustering Gemini to open-model proxies, its energy consumption is projected directly from its own published [Artificial Analysis latency data](https://artificialanalysis.ai/models/), treating accelerator type and number, batch size and Thermal Design Power (TDP) utilization as uncertain quantities and propagating that uncertainty through a Monte Carlo simulation. 
+
+Instead of clustering and projecting Gemini models, we anchor our values to their disclosure, where Google reported that the median query consumes around 0.14 when accounting for accelerator-only energy cost [@elsworth2025measuringenvironmentalimpactdelivering]. 
+
+For utilization, a range is derived from published mean-power-to-TDP ratios across TPU generations [@schneider2025lifecycleemissionsaihardware]. For instance, TPU v4i runs at roughly 42% of its 175W TDP (75W mean) [@jouppi2021ten], v5e at roughly 33% of its 197W TDP (66W mean) [@gul2026energy], and v6e at roughly 51% of its 300W TDP (153W mean) [@tpuVgpu2026]. This gives a working utilization band of roughly 30% to 60%, carried forward for both Ironwood, which has a TDP of 600W [@sharma2025aiacceleratorslargelanguage] and v6e, which has a TDP of 300W. 
+
+For hardware generation, models released before November 2025 are assumed deployed on Trillium (v6e) only, since it was the generation in general availability; models released November 2025 or later are assumed deployed on a v6e/Ironwood mix, since Ironwood reached general availability that month. Assumed TPU pod size is scaled to the model capability tier, using the same size-class reasoning as the rest of the pipeline. Flash-Lite (comparable in role to the mini/nano/Haiku tier) is assumed deployed on 2 to 8 TPUs, Flash on 4 to 16, and Pro (the largest, most capability-dense tier) on 8 to 16 kept intentionally wide given that no real deployment configurations are directly observed. 
+
+Additionally, since higher batch sizes are correlated with lower TPS and higher power draw, we use a Gaussian copula to formalize these correlations. Utilization is positively correlated with batch size (higher concurrent load draws more power), throughput is negatively correlated (more concurrent requests lowers tokens per second), and input-token latency is positively correlated (more concurrent requests slows time-to-first-token). Correlation strength itself is redrawn from a 40-60% range on every iteration rather than fixed. Accelerator count and accelerator type remain independent, drawn uniformly from the tier's allowed pool.
+
+That leaves batch size as the one quantity with no range to draw on. We calibrate it against Gemini 2.0 Flash by holding utilization (30-60%), chip count (4-16, Flash tier), accelerator type (v6e only, pre-November-2025), and 2.0 Flash's own published Artificial Analysis throughput fixed to the ranges above; we solve for the batch size range that reproduces Google's disclosed 0.14 Wh accelerator-energy figure, giving us a range of 4 to 32 concurrent requests.
+
+We treat Gemini 2.0 Flash as the model behind Google's disclosed figure because it is the most plausible median-ranked model under Google's own reporting method. Google computes average energy per prompt separately for each model, ranks models by that value, and reports the figure for whichever model serves the 50th-percentile prompt along that ranking so the figure reflects one model's mean, not a blend across models. 2.0 Flash was the Gemini Apps default for the majority of the disclosure month, giving it the largest share of prompt volume and making it the natural candidate to sit at the ranking's median. Since Gemini 2.0 Flash is a non-reasoning variant, we calibrate our values based on 300 input tokens and 1000 output tokens as a conservative estimate.
+
+For models deployed on Ironwood rather than v6e, Google's disclosure predates Ironwood's general availability, so there is no production figure to calibrate against for that generation. We know Ironwood represents a substantial generational improvement over v6e across the board  by roughly 2.5x the peak compute, 6x the HBM capacity, and 4.5x the HBM bandwidth [@tpu6e; @tpu7]. Since LLM decode is memory-bandwidth-bound rather than compute-bound, each decode step streams the full model weights plus every sequence's KV-cache out of HBM, so throughput is constrained by how fast that data can move, not by raw FLOPs. In other words, higher bandwidth is what actually allows a chip to sustain a larger batch before throughput degrades. We therefore scale the calibrated v6e batch range by 4.5x as a proxy in the absence of a disclosure from Google regarding these accelerators, giving us a range of 18 to 144 concurrent requests. 
+
+# Data provenance
+
+| Stage | Quantity | Input Category | Output Category |
+| :---- | :---- | :---- | :---- |
+| Empirical benchmarking | TPS, Batch Size, Power Draw | Measured | Measured |
+| DeepSeek deployment validation | DeepSeek reported Values | Measured | Measured |
+| Active vs total parameters | Total/active parameter counts for approximately 43 open models | Measured | Measured |
+| Active vs total parameters | Correlation of benchmark variables with parameter counts | Measured | Measured |
+| Clustering | Closed model's estimated active/total parameters (stage 1 kNN) | Measured | Estimated |
+| Clustering | Feature weights for stage 2 matching | Measured/Estimated | Estimated |
+| Clustering | Five nearest donors and their per-donor weights | Estimated | Estimated |
+| Clustering | Distance/confidence score | Estimated | Inferred |
+| Projecting TPS of Closed Models | AA's five percentile tps/ttft anchors for the closed model | Measured | Measured |
+| Projecting TPS of Closed Models | Implied batch size at a target percentile ($bs_{\ast}$) | Measured | Inferred |
+| Projecting TPS of Closed Models | Power draw at that batch size | Measured | Inferred |
+| Projecting TPS of Closed Models | Power per request | Inferred | Inferred |
+| Projecting TPS of Closed Models | Combined power per percentile across matched configs | Inferred/Estimated | Estimated |
+| Energy Per Token | Energy per input token energy per output token | Estimated | Estimated |
+
+[^1]: H100 and A40 accelerators were also deployed for specific rounds of testing described in Section 3.
+
+[^2]: We note that some Anthropic models either lack a score on the Omniscience benchmark (such as Opus 3 and 4 and Haiku 3.5). Therefore, we rely on a fallback to their most recent Anthropic sibling, using their active parameter count (Opus 4 falls back to Opus 4.1, etc.).
+
+# References
+
+::: {#refs}
+:::
