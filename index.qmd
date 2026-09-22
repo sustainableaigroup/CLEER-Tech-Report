@@ -81,7 +81,7 @@ format:
 #place(top + left, dx: 0.58in, dy: 4.8in)[
   #block(width: 6.90in)[
     #set par(leading: 0.72em)
-    #text(font: "Source Serif 4", size: 26pt, fill: rgb("#242424"))[
+    #text(font: "Source Serif 4", size: 24pt, fill: rgb("#242424"))[
       {{< meta report.subtitle >}}
     ]
   ]
@@ -90,7 +90,7 @@ format:
 #place(top + left, dx: 0.58in, dy: 8.5in)[
   #block(width: 6.90in)[
     #set par(leading: 0.72em)
-    #text(font: "Source Serif 4", size: 14pt, fill: rgb("#242424"))[
+    #text(font: "Source Serif 4", size: 12pt, fill: rgb("#242424"))[
       By {{< meta report.authors >}}
     ]
   ]
@@ -132,16 +132,17 @@ format:
 #show heading.where(level: 1): it => block(above: 12pt, below: 14pt)[
   #text(font: "Inter", size: 21pt, weight: "medium", fill: rgb("#B8663B"))[#it.body]
 ]
-
-#show heading.where(level: 1): it => block(above: 12pt, below: 14pt)[
-  #text(font: "Inter", size: 21pt, weight: "medium", fill: rgb("#B8663B"))[#it.body]
-]
 #show heading.where(level: 2): it => block(above: 13pt, below: 8pt)[
   #text(font: "Inter", size: 15pt, weight: "medium", fill: rgb("#2B6572"))[#it.body]
 ]
 #show heading.where(level: 3): it => block(above: 10pt, below: 5pt)[
   #text(font: "Inter", size: 11.5pt, weight: "medium", fill: rgb("#2B6572"))[#it.body]
 ]
+
+#show image: it => block(
+  radius: 4pt,
+  clip: true,
+)[#it]
 ```
 
 # Executive summary
@@ -432,6 +433,10 @@ For models deployed on Ironwood rather than v6e, Google's disclosure predates Ir
 [^1]: H100 and A40 accelerators were also deployed for specific rounds of testing described in Section 3.
 
 [^2]: We note that some Anthropic models either lack a score on the Omniscience benchmark (such as Opus 3 and 4 and Haiku 3.5). Therefore, we rely on a fallback to their most recent Anthropic sibling, using their active parameter count (Opus 4 falls back to Opus 4.1, etc.).
+
+```{=typst}
+#pagebreak()
+```
 
 ::: {#refs}
 :::
