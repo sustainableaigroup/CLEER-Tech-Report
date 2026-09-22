@@ -9,14 +9,8 @@ report:
   subtitle: "An empirical framework for estimating the accelerator energy use of closed AI model inference."
   authors: "Nidhal Jegham, Chan Young Koh, Boris Gamazaychikov, and Sasha Luccioni"
   version: "CLEER-METHOD-0926"
-  date: "10 SEPTEMBER 2026"
-  pdf-file: "CLEER-METHOD-0926.pdf"
-
-bibliography: references.bib
-
-bibliography: references.bib
-
-bibliography: references.bib
+  date: "29 SEPTEMBER 2026"
+  pdf-file: "CLEER-Text-0926.pdf"
 
 bibliography: references.bib
 
@@ -391,7 +385,7 @@ The field of AI is growing rapidly, and it is important for researchers, develop
 
 Google’s Gemini models receive a separate treatment from the rest of the pipeline because the clustering-and-projection approach described above depends on two important sources of information that are not currently available for TPUs (Tensor Processing Units), Google’s proprietary accelerators, which are used to deploy Gemini models: (1) an open-donor pool benchmarked on the same hardware and (2) real TPS curves from a power sweep. Instead of clustering Gemini to open-model proxies, its energy consumption is projected directly from its own published [Artificial Analysis latency data](https://artificialanalysis.ai/models/), treating accelerator type and number, batch size and Thermal Design Power (TDP) utilization as uncertain quantities and propagating that uncertainty through a Monte Carlo simulation. 
 
-Instead of clustering and projecting Gemini models, we anchor our values to their disclosure, where Google reported that the median query consumes around 0.14 when accounting for accelerator-only energy cost [@elsworth2025measuringenvironmentalimpactdelivering]. 
+Instead of clustering and projecting Gemini models, we anchor our values to their disclosure, where Google reported that the median query consumes around 0.14 Wh when accounting for accelerator-only energy cost [@elsworth2025measuringenvironmentalimpactdelivering]. 
 
 For utilization, a range is derived from published mean-power-to-TDP ratios across TPU generations [@schneider2025lifecycleemissionsaihardware]. For instance, TPU v4i runs at roughly 42% of its 175W TDP (75W mean) [@jouppi2021ten], v5e at roughly 33% of its 197W TDP (66W mean) [@gul2026energy], and v6e at roughly 51% of its 300W TDP (153W mean) [@tpuVgpu2026]. This gives a working utilization band of roughly 30% to 60%, carried forward for both Ironwood, which has a TDP of 600W [@sharma2025aiacceleratorslargelanguage] and v6e, which has a TDP of 300W. 
 
