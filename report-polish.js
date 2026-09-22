@@ -5,8 +5,8 @@
 (() => {
   const links = {
     dashboardUrl: "#",
-    githubUrl: "https://github.com/bgamazay/saig-report-demo",
-    contactUrl: "https://sustainableaigroup.com/"
+    githubUrl: "https://github.com/sustainableaigroup/",
+    contactUrl: "https://sustainableaigroup.com/#contact"
   };
 
   // Read the report-specific PDF filename exposed by index.qmd.
