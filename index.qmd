@@ -81,7 +81,7 @@ format:
 #place(top + left, dx: 0.58in, dy: 4.8in)[
   #block(width: 6.90in)[
     #set par(leading: 0.72em)
-    #text(font: "Source Serif 4", size: 24pt, fill: rgb("#242424"))[
+    #text(font: "Source Serif 4", size: 21pt, fill: rgb("#242424"))[
       {{< meta report.subtitle >}}
     ]
   ]
@@ -90,7 +90,7 @@ format:
 #place(top + left, dx: 0.58in, dy: 8.5in)[
   #block(width: 6.90in)[
     #set par(leading: 0.72em)
-    #text(font: "Source Serif 4", size: 12pt, fill: rgb("#242424"))[
+    #text(font: "Source Serif 4", size: 13pt, fill: rgb("#242424"))[
       By {{< meta report.authors >}}
     ]
   ]
@@ -161,12 +161,12 @@ The CLEER (Closed-model Latent Energy Estimation Range) methodology aims to esti
     #text(font: "DM Mono", size: 6.4pt, fill: rgb("#4F747D"))[TEST · MAP · PROJECT · DISTRIBUTE]
   ]],
   [#block(height: 1.18in, fill: rgb("#FBF2EA"), radius: 10pt, inset: 14pt, stroke: (top: 4pt + rgb("#B8663B")))[
-    #text(font: "Inter", size: 17pt, weight: "semibold", fill: rgb("#033845"))[1,700+ TESTS]
+    #text(font: "Inter", size: 17pt, weight: "semibold", fill: rgb("#033845"))[2,400+ TESTS]
     #v(8pt)
     #text(font: "DM Mono", size: 6.4pt, fill: rgb("#4F747D"))[20+ OPEN MODELS]
   ]],
   [#block(height: 1.18in, fill: rgb("#EFF8F8"), radius: 10pt, inset: 14pt, stroke: (top: 4pt + rgb("#55BAC0")))[
-    #text(font: "Inter", size: 17pt, weight: "semibold", fill: rgb("#033845"))[230M+ TOKENS]
+    #text(font: "Inter", size: 17pt, weight: "semibold", fill: rgb("#033845"))[425M+ TOKENS]
     #v(8pt)
     #text(font: "DM Mono", size: 6.4pt, fill: rgb("#4F747D"))[EMPIRICALLY BENCHMARKED]
   ]],
