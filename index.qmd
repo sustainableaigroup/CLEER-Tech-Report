@@ -332,6 +332,8 @@ The second stage of our approach takes the estimated active parameter size and f
 
 A small number of proprietary models, such as Claude Fable, have an Omniscience accuracy that exceeds every donor's own score – when this happens, both the size estimate and the proxy match switch from a plain inverse-distance weighting to a saturating concentration function where the weight on the single closest donor grows from an even 50/50 split right at the pool's ceiling toward full concentration as the model's score moves further past it, with the accuracy gap to the next-closest donor setting the scale for how quickly that concentration builds. In practice, this means an out-of-range model like Fable draws most of its estimate from a single best-matching proxy rather than blending across several, unlike an in-range model whose five neighbors typically contribute more evenly.
 
+::: {.content-visible when-format="html"}
+
 | Closed model | Confidence | Donor rank | Open-model donor | Weight |
 |---|---:|---:|---|---:|
 | Claude 4.5 Haiku | 0.679 | 1 | Qwen3 30B | 0.322 |
@@ -345,7 +347,97 @@ A small number of proprietary models, such as Claude Fable, have an Omniscience 
 |  |  | 4 | DeepSeek V3 0324 | 0.066 |
 |  |  | 5 | MiMo-V2.5-Pro | 0.061 |
 
-*Table 1  – A sample of closed models and their top 5 donors and corresponding confidence levels*
+: A sample of closed models and their top five donors and corresponding confidence levels. {#tbl-model-donors}
+
+:::
+
+```{=typst}
+#figure(
+  table(
+    columns: (1.45fr, 0.85fr, 0.75fr, 1.55fr, 0.65fr),
+    align: (left, center, center, left, right),
+    inset: (x: 7pt, y: 6pt),
+
+    stroke: (x, y) => {
+      if y == 0 {
+        (
+          top: 0.8pt + rgb("#B9C9CC"),
+          bottom: 0.8pt + rgb("#B9C9CC"),
+        )
+      } else if y == 5 {
+        (bottom: 0.8pt + rgb("#B9C9CC"))
+      } else {
+        (bottom: 0.35pt + rgb("#E1E8E9"))
+      }
+    },
+
+    fill: (x, y) => {
+      if y == 0 {
+        rgb("#F5F1E9")
+      } else if y > 5 {
+        rgb("#F7F9F9")
+      } else {
+        white
+      }
+    },
+
+    table.header(
+      repeat: true,
+      [*CLOSED MODEL*],
+      [*CONFIDENCE*],
+      [*DONOR RANK*],
+      [*OPEN-MODEL DONOR*],
+      [*WEIGHT*],
+    ),
+
+    table.cell(rowspan: 5, align: left + top)[Claude 4.5 Haiku],
+    table.cell(rowspan: 5, align: center + top)[0.679],
+    [1],
+    [Qwen3 30B],
+    [0.322],
+
+    [2],
+    [gpt-oss-20b],
+    [0.317],
+
+    [3],
+    [Qwen3 Next 80B A3B],
+    [0.137],
+
+    [4],
+    [Gemma 4 26B A4B],
+    [0.137],
+
+    [5],
+    [gpt-oss-120b],
+    [0.087],
+
+    table.cell(rowspan: 5, align: left + top)[GPT-5.5],
+    table.cell(rowspan: 5, align: center + top)[0.467],
+    [1],
+    [Kimi K3],
+    [0.567],
+
+    [2],
+    [DeepSeek V4 Pro],
+    [0.185],
+
+    [3],
+    [Kimi K2.6],
+    [0.121],
+
+    [4],
+    [DeepSeek V3 0324],
+    [0.066],
+
+    [5],
+    [MiMo-V2.5-Pro],
+    [0.061],
+  ),
+  caption: [A sample of closed models and their top five donors and corresponding confidence levels.],
+  kind: table,
+) <tbl-model-donors>
+```
 
 The output of this step is a range of the five nearest donors, those donors with their individual weights, and a standardized distance score showing how far the model sits from its neighbors compared to how far a typical donor sits from its own peers. This donor score is what separates a robust match from a best guess picked from far away, which tends to happen for models whose real architecture falls outside the donor pool. These scores are what we use for the next step, which takes the nearest open neighbors that we found for each closed model and uses them to estimate the energy draw of each model.
 
