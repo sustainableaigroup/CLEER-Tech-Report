@@ -353,6 +353,16 @@ blockquote {
   border-left-color: var(--saig-orange) !important;
 }
 
+/* Top-level Contents entries */
+.sidebar nav[role="doc-toc"] > ul > li > a {
+  font-size: 0.86rem;
+}
+
+/* Nested subsection entries */
+.sidebar nav[role="doc-toc"] > ul > li > ul > li > a {
+  font-size: 0.76rem;
+}
+
 .saig-resource-nav {
   border-top: 1px solid var(--saig-mist);
   margin-top: 1.5rem;
