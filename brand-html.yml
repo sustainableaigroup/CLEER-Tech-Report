@@ -46,7 +46,7 @@ typography:
       style: [normal, italic]
   base:
     family: DM Sans
-    size: 11pt
+    size: 12pt
     line-height: 1.55
   headings:
     family: Inter
