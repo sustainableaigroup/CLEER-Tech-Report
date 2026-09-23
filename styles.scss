@@ -221,7 +221,7 @@ h3 {
 
 .lede {
   font-family: "Source Serif 4", Georgia, serif;
-  font-size: 1.23rem;
+  font-size: 1rem;
   line-height: 1.58;
   color: #33494f;
   max-width: 760px;
@@ -244,7 +244,7 @@ h3 {
 
 .kpi:nth-child(2) { border-top-color: var(--saig-orange); background: #fbf2ea; }
 .kpi:nth-child(3) { border-top-color: var(--saig-aqua); background: #eff8f8; }
-.kpi .value { font-family: "Inter", sans-serif; font-size: 2.05rem; font-weight: 600; color: var(--saig-ocean); line-height: 1.05; }
+.kpi .value { font-family: "Inter", sans-serif; font-size: 1.75rem; font-weight: 600; color: var(--saig-ocean); line-height: 1.05; }
 .kpi .label { font-family: "DM Mono", monospace; font-size: .72rem; color: var(--saig-muted); text-transform: uppercase; letter-spacing: .06em; margin-top: .55rem; }
 
 /* Reusable executive finding component: use a callout-important titled "Key finding". */
