@@ -20,7 +20,9 @@
   #set text(font: "DM Mono", size: 7.2pt, fill: rgb("#4F747D"))
   #grid(
     columns: (1fr, 1.4fr, 1fr),
-    align(left)[Sustainable AI Group],
+    align(left)[
+      #link("https://sustainableaigroup.com/")[Sustainable AI Group]
+    ],
     align(center)[#saig-current-section],
     align(right)[Page #counter(page).display("1")]
   )
@@ -28,10 +30,7 @@
   #line(length: 100%, stroke: 0.55pt + rgb("#E6ECED"))
 ]
 
-#let saig-footer = context [
-  #set text(font: "DM Mono", size: 6.5pt, fill: rgb("#819CA2"))
-  #link("https://sustainableaigroup.com/")[sustainableaigroup.com]
-]
+#let saig-footer = none
 
 #set page(
   header: saig-header,
@@ -43,7 +42,28 @@
 
 // Refined long-document typography.
 #show figure.caption: set text(font: "DM Sans", size: 9pt, fill: rgb("#5D7076"))
-#show table: it => block(above: 7pt, below: 10pt)[
-  #set text(font: "DM Sans", size: 9.2pt)
+#show table: set table(
+  inset: (x: 7pt, y: 6pt),
+  stroke: (x, y) => (
+    bottom: 0.5pt + rgb("#D5DFE1")
+  ),
+  fill: (x, y) => {
+    if y == 0 {
+      rgb("#F5F1E9")
+    } else if calc.even(y) {
+      rgb("#F7F9F9")
+    } else {
+      white
+    }
+  }
+)
+
+#show table: it => block(
+  above: 9pt,
+  below: 12pt,
+  radius: 4pt,
+  clip: true,
+)[
+  #set text(font: "DM Sans", size: 8.8pt)
   #it
 ]
