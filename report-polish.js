@@ -1,11 +1,10 @@
 /* SAIG report web polish.
-   Replace dashboardUrl / githubUrl here when a report is promoted
-   from template to production. */
+   Replace dashboardUrl / githubUrl=feedback/issues link */
 
 (() => {
   const links = {
     dashboardUrl: "#",
-    githubUrl: "https://github.com/sustainableaigroup/",
+    githubUrl: "https://github.com/sustainableaigroup/CLEER-Tech-Report/issues",
     contactUrl: "https://sustainableaigroup.com/#contact"
   };
 
@@ -60,7 +59,7 @@
         target="_blank"
         rel="noopener"
       >
-        <span aria-hidden="true">↗</span> GitHub
+        <span aria-hidden="true">↗</span> Report Feedback?
       </a>
 
       <a
