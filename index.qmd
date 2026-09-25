@@ -35,6 +35,33 @@ format:
 
     <a class="pdf-button saig-pdf-link" href="#" target="_blank" rel="noopener noreferrer">↓ Download PDF</a>
   </div>
+  
+  <details class="saig-cite">
+    <summary>Cite this report</summary>
+    <div class="saig-cite-panel">
+      <strong>Suggested citation</strong>
+      <p>Jegham, N., Koh, C. Y., Gamazaychikov, B., &amp; Luccioni, S. (2026).
+        <em>CLEER: Closed-model Latent Energy Estimation Range. Technical Report.</em>
+        Sustainable AI Group. Version CLEER-Text-0926.
+        <a href="https://reports.sustainableaigroup.com/CLEER-Tech-Report/">https://reports.sustainableaigroup.com/CLEER-Tech-Report/</a>
+      </p>
+  
+      <strong>BibTeX</strong>
+      <pre id="saig-bibtex">@misc{saig2026cleer,
+    title        = {{CLEER}: Closed-model Latent Energy Estimation Range. Technical Report},
+    author       = {Jegham, Nidhal and Koh, Chan Young and Gamazaychikov, Boris and Luccioni, Sasha},
+    howpublished = {Sustainable AI Group},
+    year         = {2026},
+    month        = sep,
+    note         = {Version CLEER-Text-0926},
+    url          = {https://reports.sustainableaigroup.com/CLEER-Tech-Report/}
+  }</pre>
+      <button type="button" class="saig-cite-copy"
+        onclick="navigator.clipboard.writeText(document.getElementById('saig-bibtex').textContent).then(() => this.textContent = 'Copied')">
+        Copy BibTeX
+      </button>
+    </div>
+  </details>
 
   <div class="saig-cover-bottom">
     <div class="saig-authors">By {{< meta report.authors >}}</div>
