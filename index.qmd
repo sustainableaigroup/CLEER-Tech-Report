@@ -204,8 +204,8 @@ The CLEER (Closed-model Latent Energy Estimation Range) methodology aims to esti
 ```{=html}
 <div class="kpi-grid">
   <div class="kpi"><div class="value">4 stages</div><div class="label">Test · Map · Project · Distribute</div></div>
-  <div class="kpi"><div class="value">1,700+ tests</div><div class="label">20+ open models</div></div>
-  <div class="kpi"><div class="value">230M+ tokens</div><div class="label">Empirically benchmarked</div></div>
+  <div class="kpi"><div class="value">2,400+ tests</div><div class="label">20+ open models</div></div>
+  <div class="kpi"><div class="value">425M+ tokens</div><div class="label">Empirically benchmarked</div></div>
 </div>
 ```
 
@@ -317,7 +317,7 @@ Once a model has been pruned down to its active parameter footprint, the next st
 
 ## 4.1. Framework Design
 
-We benchmarked more than 20 pruned open models ranging from 20B (GPT-OSS-20B) to 2.8T (Kimi K3) across three primary GPUs (B300, B200, and H200), using seven different parallelization techniques, for a total of more than 1,700 tests and over 230 million tokens generated[^1]. For each pruned model, we ran a range of expert parallelism levels from EP1 to EP8, and for each expert parallelism level, we swept across a range of batch sizes: 32, 64, 128, 256, 384, and 512. This range is meant to cover everything from a lightly loaded AI deployment all the way up to the high, sustained batch sizes that we would expect from a hyperscaler handling heavy user traffic. On top of expert parallelism and batch size, we also varied the query length itself, running everything from short queries of around 100 tokens up through longer queries of around 1000 tokens. This matters because prefill and decode behave differently depending on how much input the model actually has to process before it starts generating, so a benchmark that only ever tested one query length would miss a real source of variation in token throughput. 
+We benchmarked more than 20 pruned open models ranging from 20B (GPT-OSS-20B) to 2.8T (Kimi K3) across three primary GPUs (B300, B200, and H200), using seven different parallelization techniques, for a total of more than 2,400 tests and over 425 million tokens generated[^1]. For each pruned model, we ran a range of expert parallelism levels from EP1 to EP8, and for each expert parallelism level, we swept across a range of batch sizes: 32, 64, 128, 256, 384, and 512. This range is meant to cover everything from a lightly loaded AI deployment all the way up to the high, sustained batch sizes that we would expect from a hyperscaler handling heavy user traffic. On top of expert parallelism and batch size, we also varied the query length itself, running everything from short queries of around 100 tokens up through longer queries of around 1000 tokens. This matters because prefill and decode behave differently depending on how much input the model actually has to process before it starts generating, so a benchmark that only ever tested one query length would miss a real source of variation in token throughput. 
 
 However, we must note that hyperscalers manage to keep the TPS quite consistent as you increase input, largely because their scale lets them absorb the resulting KV-cache growth in ways a smaller cluster can’t. This is done by deploying far more parallel replicas to spread concurrent load, reusing the cache from overlapping requests across many simultaneous users and, most importantly, by offloading an inactive KV-cache to fast external storage instead of holding it all in GPU memory. Our pruned setup cannot replicate these mechanisms without access to a whole cluster, so it tracks real deployment behavior closely at 100 input length, where KV-cache pressure is still small, but does not stay stable as you increase the input lengths, where these effects start to dominate.
 
