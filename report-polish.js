@@ -48,18 +48,18 @@
 
       <a
         class="saig-resource-link"
-        href="${links.dashboardUrl}"
-      >
-        <span aria-hidden="true">↗</span> Dashboard
-      </a>
-
-      <a
-        class="saig-resource-link"
         href="${links.githubUrl}"
         target="_blank"
         rel="noopener"
       >
-        <span aria-hidden="true">↗</span> Report Feedback?
+        <span aria-hidden="true">↗</span> Feedback
+      </a>
+
+      <a
+        class="saig-resource-link"
+        href="${links.dashboardUrl}"
+      >
+        <span aria-hidden="true">↗</span> Dashboard
       </a>
 
       <a
