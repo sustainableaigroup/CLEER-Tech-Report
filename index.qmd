@@ -159,10 +159,10 @@ format:
 #show heading.where(level: 1): it => block(above: 16pt, below: 10pt)[
   #text(font: "Inter", size: 21pt, weight: "regular", hyphenate: false, fill: rgb("#B8663B"))[#it.body]
 ]
-#show heading.where(level: 2): it => block(above: 13pt, below: 8pt)[
+#show heading.where(level: 2): it => block(above: 13pt, below: 10pt)[
   #text(font: "Inter", size: 15pt, weight: "medium", hyphenate: false, fill: rgb("#2B6572"))[#it.body]
 ]
-#show heading.where(level: 3): it => block(above: 10pt, below: 5pt)[
+#show heading.where(level: 3): it => block(above: 13pt, below: 10pt)[
   #text(font: "Inter", size: 11.5pt, weight: "bold", hyphenate: false, fill: rgb("#DD784F"))[#it.body]
 ]
 
@@ -533,14 +533,14 @@ The field of AI is growing rapidly, and it is important for researchers, develop
 | Active vs total parameters | Total/active parameter counts for approximately 43 open models | Measured | Measured |
 | Active vs total parameters | Correlation of benchmark variables with parameter counts | Measured | Measured |
 | Clustering | Closed model's estimated active/total parameters (stage 1 kNN) | Measured | Estimated |
-| Clustering | Feature weights for stage 2 matching | Measured/ Estimated | Estimated |
+| Clustering | Feature weights for stage 2 matching | Measured/Estimated | Estimated |
 | Clustering | Five nearest donors and their per-donor weights | Estimated | Estimated |
 | Clustering | Distance/confidence score | Estimated | Inferred |
 | Projecting TPS of Closed Models | AA's five percentile tps/ttft anchors for the closed model | Measured | Measured |
 | Projecting TPS of Closed Models | Implied batch size at a target percentile ($bs_{\ast}$) | Measured | Inferred |
 | Projecting TPS of Closed Models | Power draw at that batch size | Measured | Inferred |
 | Projecting TPS of Closed Models | Power per request | Inferred | Inferred |
-| Projecting TPS of Closed Models | Combined power per percentile across matched configs | Inferred/ Estimated | Estimated |
+| Projecting TPS of Closed Models | Combined power per percentile across matched configs | Inferred/Estimated | Estimated |
 | Energy Per Token | Energy per input token energy per output token | Estimated | Estimated |
 : {tbl-colwidths="[24,46,15,15]"}
 
@@ -570,10 +570,6 @@ For models deployed on Ironwood rather than v6e, Google's disclosure predates Ir
 [^1]: H100 and A40 accelerators were also deployed for specific rounds of testing described in Section 3.
 
 [^2]: We note that some Anthropic models either lack a score on the Omniscience benchmark (such as Opus 3 and 4 and Haiku 3.5). Therefore, we rely on a fallback to their most recent Anthropic sibling, using their active parameter count (Opus 4 falls back to Opus 4.1, etc.).
-
-```{=typst}
-#pagebreak()
-```
 
 ::: {#refs}
 :::
