@@ -6,7 +6,7 @@ project:
     - assets/SAIGFavicon.svg
 
 bibliography: references.bib
-reference-section-title: References
+reference-section-title: Bibliography
 
 execute:
   freeze: auto
