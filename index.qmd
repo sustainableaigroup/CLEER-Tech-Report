@@ -156,14 +156,14 @@ format:
 
 #pagebreak()
 
-#show heading.where(level: 1): it => block(above: 12pt, below: 14pt)[
-  #text(font: "Inter", size: 21pt, weight: "medium", fill: rgb("#B8663B"))[#it.body]
+#show heading.where(level: 1): it => block(above: 16pt, below: 6pt)[
+  #text(font: "Inter", size: 21pt, weight: "regular", hyphenate: false, fill: rgb("#B8663B"))[#it.body]
 ]
 #show heading.where(level: 2): it => block(above: 13pt, below: 8pt)[
-  #text(font: "Inter", size: 15pt, weight: "medium", fill: rgb("#2B6572"))[#it.body]
+  #text(font: "Inter", size: 15pt, weight: "medium", hyphenate: false, fill: rgb("#2B6572"))[#it.body]
 ]
 #show heading.where(level: 3): it => block(above: 10pt, below: 5pt)[
-  #text(font: "Inter", size: 11.5pt, weight: "medium", fill: rgb("#2B6572"))[#it.body]
+  #text(font: "Inter", size: 11.5pt, weight: "medium", hyphenate: false, fill: rgb("#2B6572"))[#it.body]
 ]
 
 #show image: it => block(
@@ -339,6 +339,10 @@ Across every batch size, we found that throughput increased monotonically with e
 ![Decode throughput relative to EP1, by batch size, versus peak system power draw (dashed) across expert-parallelism degrees EP1–EP8, aggregated equally across B200/B300/H200.](<assets/figure 6.svg>){#fig-ep-throughput-power width=100%}
 :::
 
+```{=typst}
+#pagebreak()
+```
+
 # 5. Mapping: Clustering Architectures
 
 While it is possible to measure the energy consumption of open models across a variety of types of hardware and optimization strategies, we cannot do the same for closed models, so the CLEER approach leverages proxies based on the empirical data gathered and the observable characteristics of the closed models themselves. Since we cannot inspect a closed model's architecture directly, a key idea of our approach is to find variables that reflect models’ hidden characteristics, such as total and active parameter count. The first step to this is building a reference model dataset, taking every open model in the dataset that has known total and active parameter counts, then estimating the closed model’s size based on observable characteristics, and finally carrying out clustering to find the top closest open models to each proprietary one.
@@ -498,6 +502,10 @@ In case the TTFT of a specific model is contaminated by reasoning time, we use t
 ![Donor-weighted average deployment batch size and power draw per request needed to match Claude Sonnet 4.5's throughput at each percentile (P5–P75; P95 unmatched).](<assets/figure 10.svg>){#fig-sonnet-projection width=100%}
 :::
 
+```{=typst}
+#pagebreak()
+```
+
 # 7. Distributing: From Power Draw to Energy per Token
 
 After deriving the power per request at each of the five percentiles reported by Artificial Analysis, the last step of our approach converts that number into energy per input and output token. For model output, the energy per token is straightforward: $E_{\text{output/token}} = P_{\text{mean}} \times (1/\mathrm{TPS}) / 3600$, using the measured-average power curve and the percentile's TPS directly. For input, we don't use TTFT directly, since TTFT comes with a fixed per-request startup cost alongside the actual per-token prefill cost. Instead, we regress TTFT against query length across the three query-length buckets and take the slope that represents prefill time per input token – the slope therefore isolates the marginal, per-token component that energy-per-input-token requires: the formula of energy per input token is therefore $E_{\text{input/token}} = P_{\text{mean}} \times s_{\mathrm{TTFT}} / 3600$, similar to the output side.
@@ -507,6 +515,10 @@ This is computed at each of the five percentiles separately and then aggregated,
 ::: {.figure-frame}
 ![Output, input, and cached-input energy per token (log scale) for Kimi K3 (measured, EP8/B300/batch=384) versus Gemini 3.7 Flash and Claude Sonnet 4.5 (estimated), with 1.96 standard deviations shown where available and cached input applying a 10% price ratio.](<assets/figure 11.svg>){#fig-energy-per-token width=100%}
 :::
+
+```{=typst}
+#pagebreak()
+```
 
 # 8. Conclusion
 
@@ -530,6 +542,7 @@ The field of AI is growing rapidly, and it is important for researchers, develop
 | Projecting TPS of Closed Models | Power per request | Inferred | Inferred |
 | Projecting TPS of Closed Models | Combined power per percentile across matched configs | Inferred/Estimated | Estimated |
 | Energy Per Token | Energy per input token energy per output token | Estimated | Estimated |
+: {tbl-colwidths="[24,46,15,15]"}
 
 ```{=typst}
 #pagebreak()
