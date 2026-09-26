@@ -172,7 +172,7 @@ format:
 )[#it]
 ```
 
-# Executive summary
+# Executive Summary
 
 ::: {.lede}
 The CLEER (Closed-model Latent Energy Estimation Range) methodology aims to estimate the accelerator energy consumption per output unit of different AI models, expressed as a mean and standard deviation, for prefill (cached and uncached), and output tokens. It does this by using a four-stage process that consists of: 1) Testing open models to gather ground truth regarding power draw and latency; 2) Mapping closed- and open models to find the closest proxy architectures; 3) Projecting based on benchmarked power, throughput, and performance characteristics; 4) Distributing the weighted proxies to estimate the range of energy per input and output unit. The goal of this approach is to bridge the gap between open- and closed-model energy estimation and to allow users and developers to make more informed decisions.
@@ -570,6 +570,3 @@ For models deployed on Ironwood rather than v6e, Google's disclosure predates Ir
 [^1]: H100 and A40 accelerators were also deployed for specific rounds of testing described in Section 3.
 
 [^2]: We note that some Anthropic models either lack a score on the Omniscience benchmark (such as Opus 3 and 4 and Haiku 3.5). Therefore, we rely on a fallback to their most recent Anthropic sibling, using their active parameter count (Opus 4 falls back to Opus 4.1, etc.).
-
-::: {#refs}
-:::
