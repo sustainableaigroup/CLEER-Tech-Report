@@ -55,11 +55,20 @@
         <span aria-hidden="true">↗</span> Feedback
       </a>
 
-      <a
+            <a
         class="saig-resource-link"
         href="${links.dashboardUrl}"
       >
         <span aria-hidden="true">↗</span> Dashboard
+      </a>
+
+      <a
+        class="saig-resource-link"
+        href="https://reports.sustainableaigroup.com/ai-emissions"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span aria-hidden="true">↗</span> Companion Report
       </a>
 
       <a
