@@ -14,6 +14,7 @@ authors:
   - family-names: Luccioni
     given-names: Sasha
     affiliation: Sustainable AI Group
+doi: 10.5281/zenodo.24439484
 version: CLEER-Text-0926
 date-released: 2026-09-29
 license: CC-BY-4.0
@@ -36,4 +37,5 @@ preferred-citation:
   year: 2026
   month: 9
   version: CLEER-Text-0926
+  doi: 10.5281/zenodo.24439484
   url: "https://reports.sustainableaigroup.com/CLEER-Tech-Report/0926/"
