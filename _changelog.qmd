@@ -10,15 +10,17 @@ and % change in total kgCO2e on the CAIEC reference inventory.
 
 Each version of this report describes the method behind one release of CLEER per-token accelerator energy factors. The Closed AI Emissions Calculation (CAIEC) version designed for the same factors is listed alongside.
 
-| Report version | Published | CLEER factor release | CAIEC version | Status |
-|---|---|---|---|---|
-| CLEER-Text-1226 | December 2026 | 1226 | CAIEC-1226 | Latest |
-| CLEER-Text-0926 | 29 September 2026 | 0926 | CAIEC-0926 | Superseded |
-: Report versions, factor releases and companion calculation versions. {#tbl-version-compatibility tbl-colwidths="[22,20,18,20,20]"}
+| Report version | Published | CLEER factor release | CAIEC version | Method changes | Status |
+|---|---|---|---|---|---|
+| CLEER-Text-1226 | December 2026 | 1226 | CAIEC-1226 | [None / see B.2] | Latest |
+| CLEER-Text-0926 | 29 September 2026 | 0926 | CAIEC-0926 | Initial release | Superseded |
+: Report versions, factor releases and companion calculation versions. {#tbl-version-compatibility tbl-colwidths="[20,16,14,16,20,14]"}
 
 ## B.2 Changes in CLEER-Text-1226 {#b.2-changes-in-cleer-text-1226}
 
-Changes from CLEER-Text-0926. The combined effect of this release is [summary of factor changes] and [X]% in total kgCO₂e on the CAIEC reference inventory.
+**Method changes: [none / C1226-01 re-characterization rule].**
+
+Changes from CLEER-Text-0926: [N] open models added to the donor pool, [M] closed models newly covered and [K] existing models re-characterized. The model-by-model list (status, confidence band and size of change, without per-token values) is at <https://github.com/sustainableaigroup/CLEER-Tech-Report/blob/main/changes/model-changes-1226.csv>; licensees receive the full factor diff with the 1226 factor release. The combined effect of this release is [summary of factor changes] and [X]% in total kgCO₂e on the CAIEC reference inventory.
 
 | ID | Section | Type | Trigger | Change | Effect on results |
 |---|---|---|---|---|---|

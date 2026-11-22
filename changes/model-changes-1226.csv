@@ -1,0 +1,4 @@
+model,provider,status,donor_pool_change,confidence_band_0926,confidence_band_1226,energy_per_request_direction,energy_per_request_change_band,reason
+EXAMPLE-new-model,ProviderName,new,,,high,,,"Newly covered closed model"
+EXAMPLE-recharacterized-model,ProviderName,re-characterized,"+2 open donors",medium,high,down,5-20%,"New open models improved confidence score"
+EXAMPLE-unchanged-model,ProviderName,unchanged,,high,high,,,"No new donor improved confidence score"
