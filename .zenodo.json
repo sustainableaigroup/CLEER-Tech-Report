@@ -1,0 +1,21 @@
+{
+  "title": "CLEER: Closed-model Latent Energy Estimation Range. An empirical framework for estimating the accelerator energy use of closed AI model inference",
+  "description": "Technical report describing CLEER, an empirical framework for estimating per-token accelerator energy of closed AI models from open-model benchmarking. Interactive version: https://reports.sustainableaigroup.com/CLEER-Tech-Report/",
+  "upload_type": "publication",
+  "publication_type": "report",
+  "creators": [
+    {"name": "Jegham, Nidhal", "affiliation": "Sustainable AI Group"},
+    {"name": "Koh, Chan Young", "affiliation": "Sustainable AI Group"},
+    {"name": "Gamazaychikov, Boris", "affiliation": "Sustainable AI Group"},
+    {"name": "Luccioni, Sasha", "affiliation": "Sustainable AI Group"}
+  ],
+  "license": "cc-by-4.0",
+  "keywords": ["AI", "energy", "LLM inference", "closed models", "accelerators", "CLEER"],
+  "related_identifiers": [
+    {"identifier": "https://reports.sustainableaigroup.com/CLEER-Tech-Report/0926/", "relation": "isIdenticalTo", "resource_type": "publication-report"},
+    {"identifier": "10.5281/zenodo.24438874", "relation": "isSupplementedBy", "resource_type": "publication-report"}
+  ],
+  "version": "CLEER-Text-0926",
+  "publication_date": "2026-09-29",
+  "language": "eng"
+}

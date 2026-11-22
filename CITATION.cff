@@ -1,0 +1,39 @@
+cff-version: 1.2.0
+message: "If you use this methodology, please cite the specific version you applied."
+title: "CLEER: Closed-model Latent Energy Estimation Range"
+authors:
+  - family-names: Jegham
+    given-names: Nidhal
+    affiliation: Sustainable AI Group
+  - family-names: Koh
+    given-names: Chan Young
+    affiliation: Sustainable AI Group
+  - family-names: Gamazaychikov
+    given-names: Boris
+    affiliation: Sustainable AI Group
+  - family-names: Luccioni
+    given-names: Sasha
+    affiliation: Sustainable AI Group
+version: CLEER-Text-0926
+date-released: 2026-09-29
+license: CC-BY-4.0
+url: "https://reports.sustainableaigroup.com/CLEER-Tech-Report/0926/"
+repository-code: "https://github.com/sustainableaigroup/CLEER-Tech-Report"
+preferred-citation:
+  type: report
+  title: "CLEER: Closed-model Latent Energy Estimation Range. An empirical framework for estimating the accelerator energy use of closed AI model inference"
+  authors:
+    - family-names: Jegham
+      given-names: Nidhal
+    - family-names: Koh
+      given-names: Chan Young
+    - family-names: Gamazaychikov
+      given-names: Boris
+    - family-names: Luccioni
+      given-names: Sasha
+  institution:
+    name: Sustainable AI Group
+  year: 2026
+  month: 9
+  version: CLEER-Text-0926
+  url: "https://reports.sustainableaigroup.com/CLEER-Tech-Report/0926/"
