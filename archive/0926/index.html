@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.19">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>CLEER Technical Report</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="index_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="index_files/libs/quarto-html/anchor.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-68292ac4af50626dcb173b325e4381f9.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-dark-ff0c7fb2b6253a9011a46f8d983fea68.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-68292ac4af50626dcb173b325e4381f9.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="index_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="index_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="index_files/libs/bootstrap/bootstrap-9f361a61b4cd026a965f2c341aefbbc5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="index_files/libs/bootstrap/bootstrap-dark-a99cb305b72ea2878f0a1c34ab10438a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="index_files/libs/bootstrap/bootstrap-9f361a61b4cd026a965f2c341aefbbc5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="index_files/libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="index_files/libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="index_files/libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<style>html{ scroll-behavior: smooth; }</style>
+<link rel="icon" type="image/svg+xml" href="assets/SAIGFavicon.svg">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#executive-summary" id="toc-executive-summary" class="nav-link active" data-scroll-target="#executive-summary">Executive Summary</a></li>
+  <li><a href="#introduction-the-black-box-of-energy-consumption" id="toc-introduction-the-black-box-of-energy-consumption" class="nav-link" data-scroll-target="#introduction-the-black-box-of-energy-consumption">1. Introduction: The Black Box of Energy Consumption</a></li>
+  <li><a href="#how-do-companies-deploy-ai-at-scale" id="toc-how-do-companies-deploy-ai-at-scale" class="nav-link" data-scroll-target="#how-do-companies-deploy-ai-at-scale">2. How do companies deploy AI at scale?</a>
+  <ul class="collapse">
+  <li><a href="#active-vs.-total-parameters" id="toc-active-vs.-total-parameters" class="nav-link" data-scroll-target="#active-vs.-total-parameters">2.2. Active vs.&nbsp;Total Parameters</a></li>
+  <li><a href="#parallelization-and-batching" id="toc-parallelization-and-batching" class="nav-link" data-scroll-target="#parallelization-and-batching">2.3. Parallelization and Batching</a></li>
+  </ul></li>
+  <li><a href="#less-is-more-pruning-moe-models-for-realistic-inference" id="toc-less-is-more-pruning-moe-models-for-realistic-inference" class="nav-link" data-scroll-target="#less-is-more-pruning-moe-models-for-realistic-inference">3. Less is More: Pruning MoE Models for Realistic Inference</a>
+  <ul class="collapse">
+  <li><a href="#moe-pruning-methodology" id="toc-moe-pruning-methodology" class="nav-link" data-scroll-target="#moe-pruning-methodology">3.1. MoE Pruning Methodology</a></li>
+  <li><a href="#pruning-approach-validation-deepseek-v3-and-gpt-oss-20b" id="toc-pruning-approach-validation-deepseek-v3-and-gpt-oss-20b" class="nav-link" data-scroll-target="#pruning-approach-validation-deepseek-v3-and-gpt-oss-20b">3.2. Pruning Approach Validation: DeepSeek V3 and GPT-OSS-20B</a></li>
+  </ul></li>
+  <li><a href="#testing-empirical-measurement-methodology" id="toc-testing-empirical-measurement-methodology" class="nav-link" data-scroll-target="#testing-empirical-measurement-methodology">4. Testing: Empirical Measurement Methodology</a>
+  <ul class="collapse">
+  <li><a href="#framework-design" id="toc-framework-design" class="nav-link" data-scroll-target="#framework-design">4.1. Framework Design</a></li>
+  <li><a href="#methodological-approach" id="toc-methodological-approach" class="nav-link" data-scroll-target="#methodological-approach">4.2. Methodological Approach</a></li>
+  <li><a href="#exploring-throughput-expert-parallelism-and-power-draw" id="toc-exploring-throughput-expert-parallelism-and-power-draw" class="nav-link" data-scroll-target="#exploring-throughput-expert-parallelism-and-power-draw">4.3. Exploring Throughput, Expert Parallelism, and Power Draw</a></li>
+  </ul></li>
+  <li><a href="#mapping-clustering-architectures" id="toc-mapping-clustering-architectures" class="nav-link" data-scroll-target="#mapping-clustering-architectures">5. Mapping: Clustering Architectures</a>
+  <ul class="collapse">
+  <li><a href="#estimating-closed-model-size" id="toc-estimating-closed-model-size" class="nav-link" data-scroll-target="#estimating-closed-model-size">5.1. Estimating Closed Model Size</a></li>
+  <li><a href="#finding-nearest-open-neighbors" id="toc-finding-nearest-open-neighbors" class="nav-link" data-scroll-target="#finding-nearest-open-neighbors">5.2. Finding Nearest (Open) Neighbors</a></li>
+  </ul></li>
+  <li><a href="#projecting-from-latency-to-power" id="toc-projecting-from-latency-to-power" class="nav-link" data-scroll-target="#projecting-from-latency-to-power">6. Projecting: From Latency to Power</a>
+  <ul class="collapse">
+  <li><a href="#fitting-latency-and-power-curves" id="toc-fitting-latency-and-power-curves" class="nav-link" data-scroll-target="#fitting-latency-and-power-curves">6.1. Fitting Latency and Power Curves</a></li>
+  <li><a href="#projecting-closed-models-tps-on-empirical-configurations" id="toc-projecting-closed-models-tps-on-empirical-configurations" class="nav-link" data-scroll-target="#projecting-closed-models-tps-on-empirical-configurations">6.2. Projecting Closed Models’ TPS on Empirical Configurations</a></li>
+  </ul></li>
+  <li><a href="#distributing-from-power-draw-to-energy-per-token" id="toc-distributing-from-power-draw-to-energy-per-token" class="nav-link" data-scroll-target="#distributing-from-power-draw-to-energy-per-token">7. Distributing: From Power Draw to Energy per Token</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">8. Conclusion</a></li>
+  <li><a href="#data-provenance" id="toc-data-provenance" class="nav-link" data-scroll-target="#data-provenance">Data Provenance</a></li>
+  <li><a href="#appendix-a---gemini-models-approach" id="toc-appendix-a---gemini-models-approach" class="nav-link" data-scroll-target="#appendix-a---gemini-models-approach">Annex A: Gemini Model Approach</a></li>
+  <li><a href="#bibliography" id="toc-bibliography" class="nav-link" data-scroll-target="#bibliography">Bibliography</a></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+</div>
+<main class="content" id="quarto-document-content">
+
+
+
+
+<div id="saig-pdf-file" hidden="">CLEER-Text-0926.pdf</div>
+<div class="saig-cover">
+  <div class="saig-cover-top">
+    <div class="saig-logo-card"><img src="assets/saig-logo.png" alt="Sustainable AI Group"></div>
+
+    <div class="saig-kicker">TECHNICAL REPORT</div>
+    <h1>CLEER</h1>
+    <div class="saig-expansion">[Closed-model Latent Energy Estimation Range]</div>
+    <div class="subtitle">An empirical framework for estimating the accelerator energy use of closed AI model inference.</div>
+
+    <a class="pdf-button saig-pdf-link" href="#" target="_blank" rel="noopener noreferrer">↓ Download PDF</a>
+  </div>
+  
+  <details class="saig-cite">
+    <summary>Cite this report</summary>
+    <div class="saig-cite-panel">
+      <strong>Suggested citation</strong>
+      <p>Jegham, N., Koh, C. Y., Gamazaychikov, B., &amp; Luccioni, S. (2026).
+        <em>CLEER: Closed-model Latent Energy Estimation Range. Technical Report.</em>
+        Sustainable AI Group. Version CLEER-Text-0926.
+        <a href="https://reports.sustainableaigroup.com/CLEER-Tech-Report/0926/">https://reports.sustainableaigroup.com/CLEER-Tech-Report/0926/</a>
+      </p>
+  
+      <strong>BibTeX</strong>
+      <pre id="saig-bibtex">@misc{saig2026cleer,
+    title        = {{CLEER}: Closed-model Latent Energy Estimation Range. Technical Report},
+    author       = {Jegham, Nidhal and Koh, Chan Young and Gamazaychikov, Boris and Luccioni, Sasha},
+    howpublished = {Sustainable AI Group},
+    year         = {2026},
+    month        = sep,
+    note         = {Version CLEER-Text-0926},
+    url          = {https://reports.sustainableaigroup.com/CLEER-Tech-Report/0926/}
+  }</pre>
+      <button type="button" class="saig-cite-copy" onclick="navigator.clipboard.writeText(document.getElementById('saig-bibtex').textContent).then(() => this.textContent = 'Copied')">
+        Copy BibTeX
+      </button>
+    </div>
+  </details>
+
+  <div class="saig-cover-bottom">
+    <div class="saig-authors">By Nidhal Jegham, Chan Young Koh, Boris Gamazaychikov, and Sasha Luccioni</div>
+
+    <div class="saig-cover-meta-card">
+      <div class="saig-meta-item">
+        <div class="saig-meta-label">VERSION</div>
+        <div class="saig-meta-value">CLEER-Text-0926</div>
+      </div>
+      <div class="saig-meta-item">
+        <div class="saig-meta-label">DATE</div>
+        <div class="saig-meta-value">29 SEPTEMBER 2026</div>
+      </div>
+    </div>
+  </div>
+</div>
+<section id="executive-summary" class="level1">
+<h1>Executive Summary</h1>
+<div class="lede">
+<p>The CLEER (Closed-model Latent Energy Estimation Range) methodology aims to estimate the accelerator energy consumption per output unit of different AI models, expressed as a mean and standard deviation, for prefill (cached and uncached), and output tokens. It does this by using a four-stage process that consists of: 1) Testing open models to gather ground truth regarding power draw and latency; 2) Mapping closed- and open models to find the closest proxy architectures; 3) Projecting based on benchmarked power, throughput, and performance characteristics; 4) Distributing the weighted proxies to estimate the range of energy per input and output unit. The goal of this approach is to bridge the gap between open- and closed-model energy estimation and to allow users and developers to make more informed decisions.</p>
+</div>
+<div class="kpi-grid">
+  <div class="kpi"><div class="value">4 stages</div><div class="label">Test · Map · Project · Distribute</div></div>
+  <div class="kpi"><div class="value">2,400+ tests</div><div class="label">20+ open models</div></div>
+  <div class="kpi"><div class="value">425M+ tokens</div><div class="label">Empirically benchmarked</div></div>
+</div>
+</section>
+<section id="introduction-the-black-box-of-energy-consumption" class="level1">
+<h1>1. Introduction: The Black Box of Energy Consumption</h1>
+<p>As AI models mature from scientific prototypes into core components of systems used by millions of people, it becomes increasingly important to measure and track their energy demands and ensuing environmental impacts. However, accurately measuring an AI model’s energy consumption and emissions is predicated on having access to both the hardware it is running on and information on where that hardware is located and how it is powered. While this kind of measurement can be straightforward for open-weights models like Qwen and Gemma, which can be run locally, it is impossible for proprietary, closed models like GPT-4o or Claude. Because these models are accessible only via user interfaces or APIs, they remain ‘black boxes’ regarding energy usage, making it difficult to make fully informed decisions, leaving developers, enterprises, and individual users in the dark with regard to the environmental consequences of their AI use.</p>
+<p>Our previous work, entitled “<em>How Hungry is AI? Benchmarking Energy, Water, and Carbon Footprint of LLM Inference</em>” (currently in press in Communications of the ACM), aimed to address this problem by leveraging TPS (tokens per second) and TTFT (time to first token) quantiles to estimate model latency, multiplying that latency by a power draw estimate based on the total number of model parameters, which enabled energy approximation even for closed models. However, a shortfall of this approach is that it attributed the same power draw to two models with similar parameter counts even if, in practice, they could be deployed on completely different hardware and software configurations.</p>
+<p>This is the gap that the CLEER (Closed-model Latent Energy Estimation Range) approach is designed to close, attributing power draw not as a fixed property of a model but as <strong>a dynamic result of its deployment configuration</strong> – considering factors like model latency, batch size, and hardware type in order to carry out its energy prediction. This approach leverages extensive empirical testing of the energy consumption of different open models across different configurations and accelerators, leveraging these experiments to estimate the energy needed for closed models.</p>
+<p>The CLEER approach is built on four stages:</p>
+<ol type="1">
+<li><strong>Testing</strong> open models under controlled conditions across different realistic deployment conditions, gathering ground truth data connecting hardware configurations to actual measured power draw and latency;<br>
+</li>
+<li><strong>Mapping</strong> closed and open models to find the closest proxy architectures, based on a 2-step, K-nearest neighbors clustering approach;<br>
+</li>
+<li><strong>Projecting</strong> from the proxy architecture’s benchmarked power and throughput curves, using the closed model’s own publicly observable performance characteristics ;<br>
+</li>
+<li><strong>Distributing</strong> the weighted proxies to estimate the range of energy per input and output unit for each closed model.</li>
+</ol>
+<p>The output of this process is the <strong>mean</strong> and <strong>standard deviation</strong> of energy consumption per input (cached and uncached) and output unit.</p>
+</section>
+<section id="how-do-companies-deploy-ai-at-scale" class="level1">
+<h1>2. How do companies deploy AI at scale?</h1>
+<p>Before creating any type of energy estimation framework, it is important to understand how AI models are designed and how companies deploy these models at scale. To start, while dense AI models were initially very common, the majority of recent frontier AI models are <strong>sparse</strong>; this distinction is important because while dense models activate all of the model’s layers and connections at query time, sparse models use a mixture-of-experts (MoE) approach, which activates only a subset of the model for any given query. This approach was popularized in 2023 by the Mixtral 8x7B model <span class="citation" data-cites="jiang2024mixtral">(<a href="#ref-jiang2024mixtral" role="doc-biblioref">Jiang et al. 2024</a>)</span> and has since become the most widely used architecture for large language model families such as DeepSeek <span class="citation" data-cites="deepseekai2025deepseekv3technicalreport">(<a href="#ref-deepseekai2025deepseekv3technicalreport" role="doc-biblioref">DeepSeek-AI 2024</a>)</span>, Qwen <span class="citation" data-cites="yang2025qwen3technicalreport">(<a href="#ref-yang2025qwen3technicalreport" role="doc-biblioref"><span class="nocase">Yang et al.</span> 2025</a>)</span>, Gemma <span class="citation" data-cites="gemmateam2026gemma4technicalreport">(<a href="#ref-gemmateam2026gemma4technicalreport" role="doc-biblioref">Gemma Team 2026</a>)</span>, and many others.</p>
+<section id="active-vs.-total-parameters" class="level2">
+<h2 class="anchored" data-anchor-id="active-vs.-total-parameters">2.2. Active vs.&nbsp;Total Parameters</h2>
+<p>One can argue that the lack of transparency from companies regarding the number of parameters of their models makes it impossible to meaningfully estimate their true energy consumption by solely relying on open ones. In fact, as the field has progressed, we have started seeing models grow to an enormous total size, with open models like Kimi K3 reaching up to 2.8 trillion parameters, while the parameter count of closed models remains a closely-guarded secret.</p>
+<p>However, total parameter count and active parameter count have not scaled in parallel. Looking across a pool of the top 43 open models scraped from <a href="https://artificialanalysis.ai/leaderboards/models">Artificial Analysis</a>, the total parameters range anywhere from 20 billion up to 2.8 trillion. Active parameters, on the other hand, stay confined to a much narrower band, somewhere between 3 billion and 104 billion parameters, regardless of how large the total model gets. Even the largest open model (Kimi K3, 2.8 trillion parameters) has an active parameter count of around 104 billion.</p>
+<p>This gap matters because of how MoE models actually run inference – in these types of models, each layer contains multiple specialist components known as experts; for each token in a query, the router chooses a small subset of experts to handle it, while the rest of the model sits unused for that particular token. So a model with 2.8 trillion total parameters might still only be doing the computational work of a 100-billion-parameter dense model on any given token. This is exactly why active parameters, not total parameters, are what actually drive compute and subsequent power draw. This is also why, instead of trying to use open models to estimate a closed model’s total parameter count, we use them to estimate its <strong>active parameter count</strong>.</p>
+<div class="figure-frame">
+<div id="fig-active-total" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-active-total-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="assets/figure%201.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: Active versus total parameters for the top open models according to Artificial Analysis."><img src="assets/figure%201.svg" class="img-fluid figure-img" style="width:100.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-active-total-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Active versus total parameters for the top open models according to Artificial Analysis.
+</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section id="parallelization-and-batching" class="level2">
+<h2 class="anchored" data-anchor-id="parallelization-and-batching">2.3. Parallelization and Batching</h2>
+<p>Generally speaking, processing text queries is split into two phases: <strong>prefill</strong> and <strong>decode</strong>. Prefilling is the first step, which processes the input prompt to generate the initial KV (key-value) cache values in addition to the first generated token. This phase is parallelized but <em>compute-bound</em> <span class="citation" data-cites="delavande2026">(<a href="#ref-delavande2026" role="doc-biblioref">Delavande et al. 2026</a>)</span>, which means it is limited by pure mathematical calculation speed on the accelerator and usually leads to saturation in terms of compute and power. Therefore, accelerators such as GPUs are running near their maximum power draw and utilization during the prefilling process. On the contrary, the decoding stage generates the model’s response sequentially, token by token. This process is <strong>memory-bound</strong>, which means it is limited by how fast the hardware can stream model weights and cache data from memory. By default (i.e., with no optimization), this usually leads to low utilization, with a GPU generally running at 30-60% of its total capacity in terms of power draw and memory utilization.</p>
+<p>Once a mixture-of-experts model gets large enough (i.e., hundreds of billions or even trillions of parameters), it is impossible to fit on a single accelerator, and even if it did fit in memory, it would then be too slow to respond to the number of queries users send. Therefore, in order to ensure the low latency and high throughput required by model users, they split the model across many accelerators. This is where <strong>expert parallelism</strong> comes in, and it is the piece that determines what a real deployment actually looks like on the hardware side.</p>
+<p>Expert parallelism (EP) refers to splitting the pool of experts inside an MoE model across multiple accelerators rather than keeping every expert on the same device. Each accelerator holds only a portion of the experts, and when a token gets routed to a particular expert, the computation for that token is sent to whichever accelerator that expert is on. The number attached to EP tells you how many accelerators the experts are being spread across: EP4 means the experts are split across 4, EP144 means they are split across 144, and so on.</p>
+<p>Most model providers, such as DeepSeek <span class="citation" data-cites="zuo2025servinglargelanguagemodels">(<a href="#ref-zuo2025servinglargelanguagemodels" role="doc-biblioref"><span class="nocase">Zuo et al.</span> 2025</a>)</span>, deploy between two and four experts per accelerator in order to minimize latency and maximize throughput. Some providers spread things out even further, running closer to 1 expert per accelerator to achieve lower latency, while smaller models might run closer to 4. But the deployments cannot be thinned out endlessly – there is a practical limit to how far you can spread experts across accelerators before the communication overhead becomes too significant, or before you simply run out of experts to spread further. In practice, AI developers overlap this communication with computation via techniques such as overlap/scheduling strategies, so it runs in parallel with compute time rather than creating a bottleneck and resulting in idle compute time.</p>
+<p>As <a href="#fig-active-total" class="quarto-xref">Figure&nbsp;1</a> shows, since the active parameter counts across these models tend to cluster together, with a 3- to 104-billion active parameter range across a very wide span of total model sizes, the actual deployment conditions across different hyperscalers end up looking fairly similar to each other, even if none of them match exactly. This distinction matters a lot for the rest of the pipeline, since it is exactly what our energy estimation work is trying to reproduce. Knowing roughly how many accelerators’ worth of compute a single token actually draws on, whether that looks like DeepSeek’s roughly 2 experts per accelerator, something closer to 1 expert, or 4 experts for a smaller model, lets us set up a model on our own hardware that mimics the real compute footprint per token, rather than guessing at it blindly.</p>
+<p>The final piece of this approach is the <strong>batching</strong> that model providers do in order to ensure that they can serve all incoming user requests. Given how much traffic these providers actually handle, serving hundreds of thousands of requests continuously on every instance, we can reasonably assume they are never running at a low batch size (i.e., a batch size from 1 to 8), which would leave expensive accelerators idle and waste precious computing resources. Instead, a realistic AI serving stack is designed to batch requests aggressively and to run at a high, sustained batch size as much as possible. This assumption matters for the rest of the AI pipeline, since it means that the batch size ranges we are aiming to mimic and the throughput and power curves we build around them should be weighted toward the higher end of what we benchmark, rather than toward the low batch size regime, which would only apply to a lightly used deployment.</p>
+</section>
+</section>
+<section id="less-is-more-pruning-moe-models-for-realistic-inference" class="level1">
+<h1>3. Less is More: Pruning MoE Models for Realistic Inference</h1>
+<p>Running a full MoE is time-consuming and computationally expensive, especially when it contains hundreds of experts and hundreds of billions of parameters. For instance, running the full DeepSeek V3 model parallelized across 144 GPUs <span class="citation" data-cites="zuo2025servinglargelanguagemodels">(<a href="#ref-zuo2025servinglargelanguagemodels" role="doc-biblioref"><span class="nocase">Zuo et al.</span> 2025</a>)</span> would cost roughly $500 per hour of inference, based on <a href="https://console.runpod.io/deploy?type=GPU&amp;gpu=H200+SXM&amp;count=1&amp;template=runpod-torch-v240">recent cloud compute pricing</a>. However, because only a few experts process each token, we can prune the model from all experts to only the ones used, while still reflecting how the model processes tokens, for a fraction of the compute cost.</p>
+<section id="moe-pruning-methodology" class="level2">
+<h2 class="anchored" data-anchor-id="moe-pruning-methodology">3.1. MoE Pruning Methodology</h2>
+<p>For an MoE model that normally activates eight routed experts per token, we keep only those experts in each layer of the model during the pruning process. We then update the model configuration so that both the number of available experts and the number selected per token are equivalent to eight. More generally, we set both values to <em>k</em> (i.e., the first active expert count), so that every token now passes through all <em>k</em> remaining experts. The router gives each expert a significance score, which the model uses when combining their results. These scores are calculated separately for each token, allowing an expert to influence some tokens more than others.</p>
+<p><a href="#fig-pruning" class="quarto-xref">Figure&nbsp;2</a> shows the pruning process using GPT-OSS 20B: first, we keep the selected experts and copy their weights, together with any additional data needed to use them, and keep the corresponding rows of the router’s weight matrix and any values related to the experts. By doing so, we hold the routing information aligned with the remaining experts. The tokenizers, attention blocks, norm and dense layers, and shared experts are carried over unchanged. In addition, we also check parts of the model that sit outside the main body of MoE layers – some multi token prediction (MTP) layers, for example, have their own routed experts, which need the same treatment as those in the main parts of the model. We inspect the tensors stored in each component, keep the selected experts, and update any routing information tied to them. The other parts of these components are copied without changes.</p>
+<p>We then check the saved model layer by layer to make sure all required tensors are present – many models in their original form spread weights across several files, and pruning can change that layout. We therefore rebuild the index that tells the loader where to find each tensor. Each remaining weight and its associated scales must appear in the correct file and have matching index information. The number of experts we keep also follows each model’s original routing settings. Qwen3.5 uses ten routed experts per token <span class="citation" data-cites="qwen35">(<a href="#ref-qwen35" role="doc-biblioref">Qwen Team 2026</a>)</span>, whereas MiniMax-M3 activates only four <span class="citation" data-cites="lai2026minimaxsparseattention">(<a href="#ref-lai2026minimaxsparseattention" role="doc-biblioref"><span class="nocase">Chen et al.</span> 2026</a>)</span>. GLM-4.7, GLM-5.2, Qwen3-235B, and DeepSeek V3 each use eight experts per token <span class="citation" data-cites="5team2025glm45agenticreasoningcoding glm5team2026glm5vibecodingagentic qwen3technicalreport deepseekai2025deepseekv3technicalreport">(<a href="#ref-5team2025glm45agenticreasoningcoding" role="doc-biblioref">GLM-4.5 Team 2025</a>; <a href="#ref-glm5team2026glm5vibecodingagentic" role="doc-biblioref">GLM-5 Team 2026</a>; <a href="#ref-qwen3technicalreport" role="doc-biblioref">Qwen Team 2025</a>; <a href="#ref-deepseekai2025deepseekv3technicalreport" role="doc-biblioref">DeepSeek-AI 2024</a>)</span>. Kimi K3 selects 16 from a pool of 896 experts in each MoE layer, so we keep 16 <span class="citation" data-cites="kimiteam2026kimik3openfrontier">(<a href="#ref-kimiteam2026kimik3openfrontier" role="doc-biblioref">Kimi Team 2026</a>)</span>. Shared experts, if they exist, are kept separately from these counts.</p>
+<div class="figure-frame">
+<div id="fig-pruning" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pruning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="assets/figure%202.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;2: The pruning process used by the CLEER methodology."><img src="assets/figure%202.svg" class="img-fluid figure-img" style="width:100.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pruning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: The pruning process used by the CLEER methodology.
+</figcaption>
+</figure>
+</div>
+</div>
+<p>In our experiments, we mapped each expert parallel rank to a single physical GPU (i.e., EP8 means using eight GPUs). For example, the GLM-4.7, which has eight remaining experts, assigns one routed expert from each MoE layer on each GPU in its EP8 configuration. During inference, token data is sent to the GPUs that hold the experts, and then their results are returned. This approach helps us see how expert computation performs when spread across multiple GPUs.</p>
+<div class="figure-frame">
+<div id="fig-pruned-size" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pruned-size-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="assets/figure%203.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;3: Total versus pruned size of open models, in gigabytes."><img src="assets/figure%203.svg" class="img-fluid figure-img" style="width:100.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pruned-size-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Total versus pruned size of open models, in gigabytes.
+</figcaption>
+</figure>
+</div>
+</div>
+<p>The resulting pruned models let us measure model loading time, memory use, throughput, and latency while requiring a fraction of the initial compute. Furthermore, they preserve the model’s attention blocks, layer structures, quantization format, shared experts, and number of routed expert computations per token, allowing us to accurately measure the energy used for processing each token end-to-end through the model. In order to check the ability of our approach to mimic the original deployment conditions of MoE models, we validate it based on existing data for open models – we describe this below.</p>
+</section>
+<section id="pruning-approach-validation-deepseek-v3-and-gpt-oss-20b" class="level2">
+<h2 class="anchored" data-anchor-id="pruning-approach-validation-deepseek-v3-and-gpt-oss-20b">3.2. Pruning Approach Validation: DeepSeek V3 and GPT-OSS-20B</h2>
+<p>In order to validate that pruning is a representative proxy for full model deployment, we test it against two cases: DeepSeek V3 based on the publicly reported deployment conditions and GPT-OSS-20B, where we benchmark the full unpruned model and compare it to a pruned version.</p>
+<section id="mirroring-deepseeks-deployment-for-energy-estimation" class="level3">
+<h3 class="anchored" data-anchor-id="mirroring-deepseeks-deployment-for-energy-estimation">3.2.1. Mirroring DeepSeek’s Deployment for Energy Estimation</h3>
+<p>While few AI model developers provide the necessary details regarding the intricacies of in-production model deployment, the DeepSeek team published an extensive report regarding their deployment conditions in 2025 <span class="citation" data-cites="zuo2025servinglargelanguagemodels">(<a href="#ref-zuo2025servinglargelanguagemodels" role="doc-biblioref"><span class="nocase">Zuo et al.</span> 2025</a>)</span>. According to this, the DeepSeek V3 model runs with an expert parallelism degree of 144 for decoding, meaning its experts are distributed across 144 GPUs at once. DeepSeek V3’s architecture has 256 routed experts per layer, plus 1 shared expert that every token always passes through, regardless of routing. Spreading 256 routed experts across 144 GPUs works out to roughly 2 experts sitting on each GPU, once you also account for some experts being duplicated across GPUs for load-balancing purposes. For prefilling, DeepSeek reports that they use 32 GPUs for this stage, meaning that each GPU holds around 8 routed experts and one shared.</p>
+<p>This means that at DeepSeek’s scale, during decoding, each individual GPU is really only ever responsible for holding and computing a small handful of experts, around 2, rather than anything close to the full model. And each time a token is generated, it is utilizing the compute equivalent of 4 GPUs (8 routed experts ÷ 2 experts-per-GPU), not the full 144 GPUs that the model is spread across. This holds per token, not per request, since routing is recomputed independently for every token generated, which means that multi-token responses touch different 4-GPU-equivalent slices of compute for each token, not one fixed slice for the whole request. Given that DeepSeek reports an average TPS per request of around 20 tokens per second and so that the aggregate TPS per GPU is 1,850 tokens per second, this leads to an average batch size of 370 for a node of 4 GPUs (multiplying 1850 by 4 to get the aggregate 4-GPU throughput). With a batch size of 370, you can never reach a TPS of 20 by deploying the full model on a DGX H100, since the VRAM simply cannot handle a model with so many parameters and such a high batch size.</p>
+<p>In order to measure empirical energy consumption in a realistic deployment setting, we prune the original model down to a smaller version that keeps only 8 experts, and we simulate DeepSeek’s actual deployment by spreading those experts across 4 GPUs, with each GPU holding 2 routed experts plus 1 shared expert. In other words, since the generation of every token on the real deployment ends up drawing on the combined compute of 4 GPUs on average, running our pruned model this same way – spread across 4 GPUs – gives us a much closer stand-in for what DeepSeek’s real deployment conditions actually look like, without requiring access to 144 GPUs (which we would need to test the unpruned version of the model).</p>
+<p>Deploying the pruned model across 4 H100 GPUs and varying batch size from 32 to 512, total system throughput scales from 1,110 tokens per second up to 8,293 tokens per second at high batches, while per-request TPS ranges from 34.7 down to 16.1. At a batch size of 367, we reach a TPS per request of 20 tokens per second, at which the total system throughput is around 7,286 tokens per second or around 1,822 tokens per second per GPU. Comparing our data to DeepSeek’s reported data, the deviation in terms of throughput per GPU is less than 2 percent, while the batch size deviation is around 1 percent, which provides an initial validation that the pruning approach that we have developed is a representative proxy of actual hyperscaler deployment conditions.</p>
+<div class="figure-frame">
+<div id="fig-deepseek-throughput" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-deepseek-throughput-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="assets/figure%204.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;4: Per-request decode throughput versus batch size for the pruned DeepSeek V3."><img src="assets/figure%204.svg" class="img-fluid figure-img" style="width:100.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-deepseek-throughput-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Per-request decode throughput versus batch size for the pruned DeepSeek V3.
+</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section id="validating-the-proxy-achieving-throughput-parity-for-gpt-oss" class="level3">
+<h3 class="anchored" data-anchor-id="validating-the-proxy-achieving-throughput-parity-for-gpt-oss">3.2.2. Validating the Proxy: Achieving Throughput Parity for GPT-OSS</h3>
+<p>To further validate the pruning approach, we also deployed the GPT-OSS-20B model <span class="citation" data-cites="agarwal2025gpt">(<a href="#ref-agarwal2025gpt" role="doc-biblioref"><span class="nocase">Agarwal et al.</span> 2025</a>)</span> in two configurations: the original model, which has 32 experts with 4 active per token, and its pruned version, which retains only the 4 active experts. The aim of this experiment is to compare the throughput of both models – if pruning preserves the original model’s generation behavior, the throughput per GPU should be comparable between the full model on 8 A40 GPUs (4 experts/GPU) and the pruned model on a single A40 GPU (4 experts/GPU). To ensure balanced utilization across the node, rather than activating specific experts while leaving others idle, we reroute requests to spread evenly across all experts. This reflects the assumption that hyperscalers deploy models in ways that keep most experts highly utilized, so our results represent average deployment conditions.</p>
+<p>While the full model spreads its total batch evenly across 8 GPUs, the pruned model runs its entire batch on a single GPU: for instance, a full model batch of 256 is split into 32 concurrent requests per GPU, while a pruned model batch of 256 puts all 256 requests on 1 GPU. To hold per-GPU concurrency constant across both setups, we scale the full model’s batch size to 8 times the pruned model’s batch size at each comparison so that each of the full model’s 8 GPUs and the pruned model’s single GPU are handling the same per-GPU request load. Across five matched batch pairs (pruned batch 32 to 384, full model 256 to 3072), per-GPU throughput ranges from 2,200 to 6,700 tokens per second in both configurations, with throughput matched within 7% deviation at most. While the pruned model usually has a higher throughput, we hypothesize that this is because it avoids the inter-GPU communication overhead the full model incurs – this overhead would be significantly reduced using the advanced optimization techniques that AI model providers use in practice.</p>
+<div class="figure-frame">
+<div id="fig-gpt-oss-validation" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gpt-oss-validation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="assets/figure%205.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure&nbsp;5: Per-GPU throughput comparison between the pruned GPT-OSS-20B proxy (1 GPU, 4 experts) and the full model (8 GPUs, 4 experts per GPU)."><img src="assets/figure%205.svg" class="img-fluid figure-img" style="width:100.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gpt-oss-validation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Per-GPU throughput comparison between the pruned GPT-OSS-20B proxy (1 GPU, 4 experts) and the full model (8 GPUs, 4 experts per GPU).
+</figcaption>
+</figure>
+</div>
+</div>
+<p>These two case studies show that pruning an MoE model down and simulating its real deployment conditions, rather than trying to run the full model directly, reproduces the same throughput and latency behavior seen on the actual cloud deployment. Taken together, these results give us reasonable confidence to use the pruned setup as a stand-in for the full model in the rest of the pipeline, letting us estimate power draw and energy consumption under deployment conditions that would otherwise be inaccessible to us without access to hundreds of cloud-based GPUs at a high cost.</p>
+</section>
+</section>
+</section>
+<section id="testing-empirical-measurement-methodology" class="level1">
+<h1>4. Testing: Empirical Measurement Methodology</h1>
+<p>Once a model has been pruned down to its active parameter footprint, the next step of the CLEER approach is figuring out how it actually behaves under different deployment conditions, since, as explained above, no single expert parallelism level is an accurate representation of the deployment conditions across all hyperscalers. Therefore, instead of testing one configuration, we run each pruned model across a range of expert parallelism levels, from EP1 up through EP8, covering everything from a single accelerator holding the full pruned model to spreading it across 8 accelerators.</p>
+<section id="framework-design" class="level2">
+<h2 class="anchored" data-anchor-id="framework-design">4.1. Framework Design</h2>
+<p>We benchmarked more than 20 pruned open models ranging from 20B (GPT-OSS-20B) to 2.8T (Kimi K3) across three primary GPUs (B300, B200, and H200), using seven different parallelization techniques, for a total of more than 2,400 tests and over 425 million tokens generated<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. For each pruned model, we ran a range of expert parallelism levels from EP1 to EP8, and for each expert parallelism level, we swept across a range of batch sizes: 32, 64, 128, 256, 384, and 512. This range is meant to cover everything from a lightly loaded AI deployment all the way up to the high, sustained batch sizes that we would expect from a hyperscaler handling heavy user traffic. On top of expert parallelism and batch size, we also varied the query length itself, running everything from short queries of around 100 tokens up through longer queries of around 1000 tokens. This matters because prefill and decode behave differently depending on how much input the model actually has to process before it starts generating, so a benchmark that only ever tested one query length would miss a real source of variation in token throughput.</p>
+<p>However, we must note that hyperscalers manage to keep the TPS quite consistent as you increase input, largely because their scale lets them absorb the resulting KV-cache growth in ways a smaller cluster can’t. This is done by deploying far more parallel replicas to spread concurrent load, reusing the cache from overlapping requests across many simultaneous users and, most importantly, by offloading an inactive KV-cache to fast external storage instead of holding it all in GPU memory. Our pruned setup cannot replicate these mechanisms without access to a whole cluster, so it tracks real deployment behavior closely at 100 input length, where KV-cache pressure is still small, but does not stay stable as you increase the input lengths, where these effects start to dominate.</p>
+<p>Each configuration, composed of a model, expert parallelism level, a quantization level, type and number of GPUs, query length, and batch size, is tested three times to average out run-to-run noise. Additionally, instead of running all of the tests back to back, the entire run plan is randomized so the three runs of each configuration are spread out. This avoids systematic bias from thermal drift, GPU state carried from a previous run, or any other systematic bias that sequential runs would bake into the results.</p>
+</section>
+<section id="methodological-approach" class="level2">
+<h2 class="anchored" data-anchor-id="methodological-approach">4.2. Methodological Approach</h2>
+<p>All tests were served via the <a href="https://docs.vllm.ai/en/v0.6.1/">vLLM library</a>– this gave us a consistent method to load the models and manage generation across various serving conditions and hardware configurations. In order to simulate the real-world inference scenario, we also tested continuous batching, which allows queries to be processed together as they arrive and manages the memory used to store attention information during generation. These features let us examine how throughput and response time change as more requests are processed concurrently.</p>
+<p>We selected computation backends according to what each accelerator can support, the architecture of the model, and the quantization format. For instance, on Blackwell GPUs, several of our quantized MoE experiments used <a href="https://docs.flashinfer.ai/generated/flashinfer.fused_moe.trtllm_fp4_block_scale_moe.html">FlashInfer’s TensorRT-LLM kernels</a>, whereas on Hopper, depending on the operation and model, we used <a href="https://triton-lang.org/main/index.html">compatible implementations</a> such as Triton, Marlin, and FlashInfer. These backends provide the GPU routines that carry out operations such as attention and expert layer computations, matching the backend to the model’s numerical format in order to run the quantized models on the available hardware. For instance, our pruned version of GPT-OSS 20B run on H100 used Marlin to process weights that are compressed to 4-bit, which allows us to support FP4 weight storage on GPUs that lack native FP4 computation.</p>
+<p>GPU-level energy consumption was logged using the <a href="https://pypi.org/project/pynvml/">pynvml</a> package, sampling power draw and utilization independently on every GPU in the node every 100 milliseconds for the duration of each run. Each sample records a timestamp, elapsed time, GPU index, average, maximum, and minimum power draw, GPU and memory utilization, memory used, and temperature, and is joined against the benchmarking configuration that produced it, model, expert parallelism degree, and count, hardware, NVLink topology, and backend, together with the corresponding batch size, query length, and throughput metrics (prompt and completion tokens, decode tokens per second, per-request latency percentiles, and TTFT percentiles). This per-GPU, per-100ms resolution is what lets us isolate power draw at the individual configuration level rather than relying on node-level averages.</p>
+</section>
+<section id="exploring-throughput-expert-parallelism-and-power-draw" class="level2">
+<h2 class="anchored" data-anchor-id="exploring-throughput-expert-parallelism-and-power-draw">4.3. Exploring Throughput, Expert Parallelism, and Power Draw</h2>
+<p>Across every batch size, we found that throughput increased monotonically with expert parallelism degree, but power draw scales considerably faster. At EP8, throughput relative to each configuration’s own EP1 baseline ranges from 1.22x at batch size 32 up to 2.55x at batch size 384, with the scaling benefit growing steadily with batch size in between. Aggregate power draw over the same EP1 – EP8 range reached 4.28x, well above even the best throughput gain observed. This gap showcases that <strong>tokens produced per watt consistently decline as expert parallelism increases,</strong> regardless of how heavily the deployment is batched. Larger batch sizes narrow this efficiency gap, since they let each additional GPU do more useful work per unit of added power, but the underlying pattern is the same across the whole sweep, where adding GPUs to increase throughput comes at a power cost that grows faster than the throughput itself.</p>
+<div class="figure-frame">
+<div id="fig-ep-throughput-power" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ep-throughput-power-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="assets/figure%206.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure&nbsp;6: Decode throughput relative to EP1, by batch size, versus peak system power draw (dashed) across expert-parallelism degrees EP1–EP8, aggregated equally across B200/B300/H200."><img src="assets/figure%206.svg" class="img-fluid figure-img" style="width:100.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ep-throughput-power-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Decode throughput relative to EP1, by batch size, versus peak system power draw (dashed) across expert-parallelism degrees EP1–EP8, aggregated equally across B200/B300/H200.
+</figcaption>
+</figure>
+</div>
+</div>
+</section>
+</section>
+<section id="mapping-clustering-architectures" class="level1">
+<h1>5. Mapping: Clustering Architectures</h1>
+<p>While it is possible to measure the energy consumption of open models across a variety of types of hardware and optimization strategies, we cannot do the same for closed models, so the CLEER approach leverages proxies based on the empirical data gathered and the observable characteristics of the closed models themselves. Since we cannot inspect a closed model’s architecture directly, a key idea of our approach is to find variables that reflect models’ hidden characteristics, such as total and active parameter count. The first step to this is building a reference model dataset, taking every open model in the dataset that has known total and active parameter counts, then estimating the closed model’s size based on observable characteristics, and finally carrying out clustering to find the top closest open models to each proprietary one.</p>
+<section id="estimating-closed-model-size" class="level2">
+<h2 class="anchored" data-anchor-id="estimating-closed-model-size">5.1. Estimating Closed Model Size</h2>
+<p>For 36 of the most commonly-used closed AI models, we estimate their active parameter count by using a nearest neighbor regression, weighting the five nearest neighbors by distance based on features that are actually observable for closed models, such as benchmark performance, price for input and output tokens, context window, etc. While using the top 5 correlated variables yields higher cross-validation accuracy than using a single metric, that cross-validation is biased for a specific reason: pricing is a valid proxy for open models but breaks down for closed models, which tend to carry wider or narrower profit margins than open ones. In fact, these margins can reflect subsidization, strategic pricing, or platform lock-in rather than the actual cost of compute.</p>
+<div class="figure-frame">
+<div id="fig-feature-correlation" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-feature-correlation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="assets/figure%207.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Figure&nbsp;7: Pearson correlation of the top 10 benchmark and pricing variables against total and active parameter count."><img src="assets/figure%207.svg" class="img-fluid figure-img" style="width:100.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-feature-correlation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: Pearson correlation of the top 10 benchmark and pricing variables against total and active parameter count.
+</figcaption>
+</figure>
+</div>
+</div>
+<p>The first stage of our clustering methodology is therefore grounded in architectural proxies, not financial signals. Benchmark scores present a similar problem, since certain results can be inflated by reasoning levels (Terminal Bench, SciCode), so we cannot rely on those either. For this reason, the first stage relies solely on accuracy on the <a href="https://artificialanalysis.ai/evaluations/omniscience">Omniscience benchmark</a> (which has a 0.87 correlation with the number of active parameters), a benchmark that evaluates a model’s knowledge retention, which reflects the model’s size and isn’t affected by reasoning level, alongside the model’s context window (0.47 correlation with active parameters) and launch date. This gives us an estimated active and total parameter count, standing in for what we cannot measure directly.</p>
+</section>
+<section id="finding-nearest-open-neighbors" class="level2">
+<h2 class="anchored" data-anchor-id="finding-nearest-open-neighbors">5.2. Finding Nearest (Open) Neighbors</h2>
+<p>The second stage of our approach takes the estimated active parameter size and finds the five nearest open model donors we actually tested in a combined feature space of log active parameters, log total parameters, and omniscience score. We validate the weights with nested leave-one-out cross-validation (LOO-CV), where we hold out each donor, use a noisy size estimate from the others, and match it against proxies using that noisy estimate, exactly as a real closed model would. This is what the pipeline is actually judged on, and it currently holds at around 85%, meaning roughly 85 percent of donors have their true size fall within the range their five nearest proxies predict<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
+<p>A small number of proprietary models, such as Claude Fable, have an Omniscience accuracy that exceeds every donor’s own score – when this happens, both the size estimate and the proxy match switch from a plain inverse-distance weighting to a saturating concentration function where the weight on the single closest donor grows from an even 50/50 split right at the pool’s ceiling toward full concentration as the model’s score moves further past it, with the accuracy gap to the next-closest donor setting the scale for how quickly that concentration builds. In practice, this means an out-of-range model like Fable draws most of its estimate from a single best-matching proxy rather than blending across several, unlike an in-range model whose five neighbors typically contribute more evenly.</p>
+<div id="tbl-model-donors" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-model-donors-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: A sample of closed models and their top five donors and corresponding confidence levels.
+</figcaption>
+<div aria-describedby="tbl-model-donors-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Closed model</th>
+<th style="text-align: right;">Confidence</th>
+<th style="text-align: right;">Donor rank</th>
+<th>Open-model donor</th>
+<th style="text-align: right;">Weight</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Claude 4.5 Haiku</td>
+<td style="text-align: right;">0.679</td>
+<td style="text-align: right;">1</td>
+<td>Qwen3 30B</td>
+<td style="text-align: right;">0.322</td>
+</tr>
+<tr class="even">
+<td></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">2</td>
+<td>gpt-oss-20b</td>
+<td style="text-align: right;">0.317</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">3</td>
+<td>Qwen3 Next 80B A3B</td>
+<td style="text-align: right;">0.137</td>
+</tr>
+<tr class="even">
+<td></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">4</td>
+<td>Gemma 4 26B A4B</td>
+<td style="text-align: right;">0.137</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">5</td>
+<td>gpt-oss-120b</td>
+<td style="text-align: right;">0.087</td>
+</tr>
+<tr class="even">
+<td>GPT-5.5</td>
+<td style="text-align: right;">0.467</td>
+<td style="text-align: right;">1</td>
+<td>Kimi K3</td>
+<td style="text-align: right;">0.567</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">2</td>
+<td>DeepSeek V4 Pro</td>
+<td style="text-align: right;">0.185</td>
+</tr>
+<tr class="even">
+<td></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">3</td>
+<td>Kimi K2.6</td>
+<td style="text-align: right;">0.121</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">4</td>
+<td>DeepSeek V3 0324</td>
+<td style="text-align: right;">0.066</td>
+</tr>
+<tr class="even">
+<td></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">5</td>
+<td>MiMo-V2.5-Pro</td>
+<td style="text-align: right;">0.061</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>The output of this step is a range of the five nearest donors, those donors with their individual weights, and a standardized distance score showing how far the model sits from its neighbors compared to how far a typical donor sits from its own peers. This donor score is what separates a robust match from a best guess picked from far away, which tends to happen for models whose real architecture falls outside the donor pool. These scores are what we use for the next step, which takes the nearest open neighbors that we found for each closed model and uses them to estimate the energy draw of each model.</p>
+</section>
+</section>
+<section id="projecting-from-latency-to-power" class="level1">
+<h1>6. Projecting: From Latency to Power</h1>
+<p>Once a closed model has an architectural proxy based on the clustering approach, the projection stage is what turns that proxy into an actual estimate of power draw and energy consumption per request. The starting point is the empirical benchmarking data itself – the full grid of pruned models run across different expert parallelism levels, batch sizes, and query lengths described earlier. For each open model and at each expert parallelism level, we have real measured throughput and real measured total system power draw.</p>
+<section id="fitting-latency-and-power-curves" class="level2">
+<h2 class="anchored" data-anchor-id="fitting-latency-and-power-curves">6.1. Fitting Latency and Power Curves</h2>
+<p>For every model and expert parallelism level, we fit two curves across the measured batch sizes: one for <strong>tokens per second per request</strong> and one for <strong>total system power draw</strong>, both as smooth monotonic functions of batch size. These curves are only valid within the batch size range that was actually measured. In other words, we do not extrapolate to higher or lower batch sizes or different parallelizations. For TPS, we derive a single value, while for power draw, we derive minimum, maximum, and average, modeling it as a range for later calculations. We assume that a closed model’s real architecture is reasonably well-represented by its five nearest open-model proxies in the clustering step, an assumption that holds better for some models than others, depending on how far that model’s own architecture sits from the sparsity regime the donor pool was built from, which is exactly what the distance and confidence score reported alongside each match (and validated through cross-validation) is meant to flag.</p>
+<div class="figure-frame">
+<div id="fig-latency-power-curves" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-latency-power-curves-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="assets/figure%208.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Figure&nbsp;8: Per-request decode throughput and system power draw versus batch size for Kimi K2.6 and MiMo-V2.5-Pro across expert-parallelism degrees EP1–EP8 on B200, with Thermal Design Power (TDP) reference lines showing how far each configuration sits from its power ceiling."><img src="assets/figure%208.svg" class="img-fluid figure-img" style="width:100.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-latency-power-curves-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8: Per-request decode throughput and system power draw versus batch size for Kimi K2.6 and MiMo-V2.5-Pro across expert-parallelism degrees EP1–EP8 on B200, with Thermal Design Power (TDP) reference lines showing how far each configuration sits from its power ceiling.
+</figcaption>
+</figure>
+</div>
+</div>
+<p>By doing this projection, we assume that if a proxy expert parallelism configuration reaches a certain level of TPS, the batch size and, equivalently, the power draw per request implied by that configuration is, to a reasonable degree, representative of the batch size and power draw a closed model would need to reach that same TPS. This does not mean the proxy configuration is the actual configuration the closed model runs, only that <strong>it is a plausible stand-in whose throughput and power relationship is architecturally comparable,</strong> since the goal of the clustering approach is to find a proxy close enough in size and structure so that this substitution is defensible rather than arbitrary. We also assume that a closed provider’s deployment is running at a high, sustained batch size, given the volume of traffic these companies serve, rather than at the low batch sizes (batch sizes of 1 to 8) that would only be realistic for a lightly used deployment or high-end percentiles. We use the average, maximum, and minimum power draw observed during testing to reflect total system behavior. While our simulated deployment conditions primarily represent decoding, and prefill is usually deployed on fewer GPUs given its compute-bound nature, the observed power range is assumed to be representative since it reflects both phases, making this a reasonable approximation rather than exact equivalence for the prefilling phase.</p>
+<p>Finally, for most models, we do not assume specific deployment on (e.g., Hopper or Blackwell accelerators) – we let the projection pick the configurations that can reach those specific latencies, with the assumption that models deployed on newer GPUs will have a TPS only achieved by models tested on the same GPUs. For models launched before 2025, we assume deployment on Hopper H200 because B200 and B300 were not deployed at scale yet <span class="citation" data-cites="blackwell2024">(<a href="#ref-blackwell2024" role="doc-biblioref">Shilov 2024</a>)</span>. For Google specifically, we assume deployment on Google’s own TPU hardware rather than Nvidia GPUs, given Google’s long-standing preference for its in-house accelerators for both training and serving its own models. This will be broken out into its own dedicated section in Annex A rather than folded into the general GPU-based assumptions, since TPU power draw and throughput characteristics do not map onto the GPU-centric benchmarking framework used elsewhere in this document.</p>
+</section>
+<section id="projecting-closed-models-tps-on-empirical-configurations" class="level2">
+<h2 class="anchored" data-anchor-id="projecting-closed-models-tps-on-empirical-configurations">6.2. Projecting Closed Models’ TPS on Empirical Configurations</h2>
+<p>With curves for TPS per request and power draw covering every combination of model, expert parallelism, and batch size, the next step connects this back to the closed model itself. <a href="https://artificialanalysis.ai/leaderboards/models">Artificial Analysis</a> provides five percentile points describing the closed model’s actual TPS, from the 5th through the 95th percentile. For each of these five percentiles, we average out the TPS and TTFT across different query lengths (q100-1k-10k for input and q300-1000-1500 for output), and we take that target speed and check every proxy configuration to see whether it is even capable of producing it; if the target falls within what a given configuration’s throughput curve can produce, we invert that curve to solve for the batch size that would have produced exactly that speed, then read the power draw off that configuration’s power curve at that same batch size. Dividing by batch size converts that into power per individual request range.</p>
+<p>In case the TTFT of a specific model is contaminated by reasoning time, we use the closest fallback model based on the specific family and company. For instance, if Opus 4.8 TTFT is contaminated, we fall back to Opus 4.7, 4.6, etc. If those variants are also contaminated, we fall back to the closest family by the same company, which is Sonnet. When more than one configuration is capable of producing a given percentile’s target speed, their power-per-request estimates are combined with the weighted score assigned to each open model based on its proximity to the closed model during clustering.</p>
+<div class="figure-frame">
+<div id="fig-sonnet-donor-curves" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sonnet-donor-curves-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="assets/figure%209.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="Figure&nbsp;9: Per-request decode throughput versus batch size for Claude Sonnet 4.5’s two highest proxy donors (GLM-4.7 and MiMo-V2.5-Pro), across expert-parallelism degree and hardware, with target percentile speeds overlaid as dashed lines."><img src="assets/figure%209.svg" class="img-fluid figure-img" style="width:100.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sonnet-donor-curves-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9: Per-request decode throughput versus batch size for Claude Sonnet 4.5’s two highest proxy donors (GLM-4.7 and MiMo-V2.5-Pro), across expert-parallelism degree and hardware, with target percentile speeds overlaid as dashed lines.
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="figure-frame">
+<div id="fig-sonnet-projection" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sonnet-projection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="assets/figure%2010.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10" title="Figure&nbsp;10: Donor-weighted average deployment batch size and power draw per request needed to match Claude Sonnet 4.5’s throughput at each percentile (P5–P75; P95 unmatched)."><img src="assets/figure%2010.svg" class="img-fluid figure-img" style="width:100.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sonnet-projection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10: Donor-weighted average deployment batch size and power draw per request needed to match Claude Sonnet 4.5’s throughput at each percentile (P5–P75; P95 unmatched).
+</figcaption>
+</figure>
+</div>
+</div>
+</section>
+</section>
+<section id="distributing-from-power-draw-to-energy-per-token" class="level1">
+<h1>7. Distributing: From Power Draw to Energy per Token</h1>
+<p>After deriving the power per request at each of the five percentiles reported by Artificial Analysis, the last step of our approach converts that number into energy per input and output token. For model output, the energy per token is straightforward: <span class="math inline">\(E_{\text{output/token}} = P_{\text{mean}} \times (1/\mathrm{TPS}) / 3600\)</span>, using the measured-average power curve and the percentile’s TPS directly. For input, we don’t use TTFT directly, since TTFT comes with a fixed per-request startup cost alongside the actual per-token prefill cost. Instead, we regress TTFT against query length across the three query-length buckets and take the slope that represents prefill time per input token – the slope therefore isolates the marginal, per-token component that energy-per-input-token requires: the formula of energy per input token is therefore <span class="math inline">\(E_{\text{input/token}} = P_{\text{mean}} \times s_{\mathrm{TTFT}} / 3600\)</span>, similar to the output side.</p>
+<p>This is computed at each of the five percentiles separately and then aggregated, while means are combined across percentiles using a weighted average based on normal-distribution percentile weights. The median is weighted most heavily, and the tails weighted least, and standard deviations are pooled as the square root of the mean of variances. For energy per cached input token, we rely on the ratio between uncached and cached input tokens to infer the energy cost as a proxy. For every closed model, this stage outputs energy per input token (cached and uncached) and energy per output token, each as a mean and standard deviation rather than a single number. Each result also comes with the number of proxy configurations matched and how far the closed model sat from its clustering neighbors.</p>
+<div class="figure-frame">
+<div id="fig-energy-per-token" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-energy-per-token-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="assets/figure%2011.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-11" title="Figure&nbsp;11: Output, input, and cached-input energy per token (log scale) for Kimi K3 (measured, EP8/B300/batch=384) versus Gemini 3.7 Flash and Claude Sonnet 4.5 (estimated), with 1.96 standard deviations shown where available and cached input applying a 10% price ratio."><img src="assets/figure%2011.svg" class="img-fluid figure-img" style="width:100.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-energy-per-token-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11: Output, input, and cached-input energy per token (log scale) for Kimi K3 (measured, EP8/B300/batch=384) versus Gemini 3.7 Flash and Claude Sonnet 4.5 (estimated), with 1.96 standard deviations shown where available and cached input applying a 10% price ratio.
+</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section id="conclusion" class="level1">
+<h1>8. Conclusion</h1>
+<p>The field of AI is growing rapidly, and it is important for researchers, developers, and decision makers to be aware of the energy demands and environmental impacts of model deployment. Building upon extensive energy benchmarking of open models and a series of statistical approximations, we have created CLEER, an approach that is able to provide empirically-informed energy efficiency estimates for all of the major proprietary AI models. Instead of predicting an exact number, we instead estimate a range, allowing different members of the ecosystem to choose the degree of precision and assumptions that best reflect the downstream usage that they will make of them. We will describe how CLEER can be applied in practice by taking accelerator energy and converting it to full facility energy and carbon emissions in our accompanying document (forthcoming). Taken together, our goal is to move the state of the art in AI energy estimates forward by leveraging the most extensive AI energy benchmarking carried out to date to allow the AI community to make more informed decisions.</p>
+</section>
+<section id="data-provenance" class="level1">
+<h1>Data Provenance</h1>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 24%">
+<col style="width: 46%">
+<col style="width: 15%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Stage</th>
+<th style="text-align: left;">Quantity</th>
+<th style="text-align: left;">Input Category</th>
+<th style="text-align: left;">Output Category</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Empirical benchmarking</td>
+<td style="text-align: left;">TPS, Batch Size, Power Draw</td>
+<td style="text-align: left;">Measured</td>
+<td style="text-align: left;">Measured</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">DeepSeek deployment validation</td>
+<td style="text-align: left;">DeepSeek reported Values</td>
+<td style="text-align: left;">Measured</td>
+<td style="text-align: left;">Measured</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Active vs total parameters</td>
+<td style="text-align: left;">Total/active parameter counts for approximately 43 open models</td>
+<td style="text-align: left;">Measured</td>
+<td style="text-align: left;">Measured</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Active vs total parameters</td>
+<td style="text-align: left;">Correlation of benchmark variables with parameter counts</td>
+<td style="text-align: left;">Measured</td>
+<td style="text-align: left;">Measured</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Clustering</td>
+<td style="text-align: left;">Closed model’s estimated active/total parameters (stage 1 kNN)</td>
+<td style="text-align: left;">Measured</td>
+<td style="text-align: left;">Estimated</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Clustering</td>
+<td style="text-align: left;">Feature weights for stage 2 matching</td>
+<td style="text-align: left;">Measured/Estimated</td>
+<td style="text-align: left;">Estimated</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Clustering</td>
+<td style="text-align: left;">Five nearest donors and their per-donor weights</td>
+<td style="text-align: left;">Estimated</td>
+<td style="text-align: left;">Estimated</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Clustering</td>
+<td style="text-align: left;">Distance/confidence score</td>
+<td style="text-align: left;">Estimated</td>
+<td style="text-align: left;">Inferred</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Projecting TPS of Closed Models</td>
+<td style="text-align: left;">AA’s five percentile tps/ttft anchors for the closed model</td>
+<td style="text-align: left;">Measured</td>
+<td style="text-align: left;">Measured</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Projecting TPS of Closed Models</td>
+<td style="text-align: left;">Implied batch size at a target percentile (<span class="math inline">\(bs_{\ast}\)</span>)</td>
+<td style="text-align: left;">Measured</td>
+<td style="text-align: left;">Inferred</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Projecting TPS of Closed Models</td>
+<td style="text-align: left;">Power draw at that batch size</td>
+<td style="text-align: left;">Measured</td>
+<td style="text-align: left;">Inferred</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Projecting TPS of Closed Models</td>
+<td style="text-align: left;">Power per request</td>
+<td style="text-align: left;">Inferred</td>
+<td style="text-align: left;">Inferred</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Projecting TPS of Closed Models</td>
+<td style="text-align: left;">Combined power per percentile across matched configs</td>
+<td style="text-align: left;">Inferred/Estimated</td>
+<td style="text-align: left;">Estimated</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Energy Per Token</td>
+<td style="text-align: left;">Energy per input token energy per output token</td>
+<td style="text-align: left;">Estimated</td>
+<td style="text-align: left;">Estimated</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="appendix-a---gemini-models-approach" class="level1">
+<h1>Annex A: Gemini Model Approach</h1>
+<p>Google’s Gemini models receive a separate treatment from the rest of the pipeline because the clustering-and-projection approach described above depends on two important sources of information that are not currently available for TPUs (Tensor Processing Units), Google’s proprietary accelerators, which are used to deploy Gemini models: (1) an open-donor pool benchmarked on the same hardware and (2) real TPS curves from a power sweep. Instead of clustering Gemini to open-model proxies, its energy consumption is projected directly from its own published <a href="https://artificialanalysis.ai/models/">Artificial Analysis latency data</a>, treating accelerator type and number, batch size and Thermal Design Power (TDP) utilization as uncertain quantities and propagating that uncertainty through a Monte Carlo simulation.</p>
+<p>Instead of clustering and projecting Gemini models, we anchor our values to their disclosure, where Google reported that the median query consumes around 0.14 Wh when accounting for accelerator-only energy cost <span class="citation" data-cites="elsworth2025measuringenvironmentalimpactdelivering">(<a href="#ref-elsworth2025measuringenvironmentalimpactdelivering" role="doc-biblioref">Elsworth et al. 2025</a>)</span>.</p>
+<p>For utilization, a range is derived from published mean-power-to-TDP ratios across TPU generations <span class="citation" data-cites="schneider2025lifecycleemissionsaihardware">(<a href="#ref-schneider2025lifecycleemissionsaihardware" role="doc-biblioref">Schneider et al. 2025</a>)</span>. For instance, TPU v4i runs at roughly 42% of its 175W TDP (75W mean) <span class="citation" data-cites="jouppi2021ten">(<a href="#ref-jouppi2021ten" role="doc-biblioref">Jouppi et al. 2021</a>)</span>, v5e at roughly 33% of its 197W TDP (66W mean) <span class="citation" data-cites="gul2026energy">(<a href="#ref-gul2026energy" role="doc-biblioref">Gül 2026</a>)</span>, and v6e at roughly 51% of its 300W TDP (153W mean) <span class="citation" data-cites="tpuVgpu2026">(<a href="#ref-tpuVgpu2026" role="doc-biblioref">Peterson 2026</a>)</span>. This gives a working utilization band of roughly 30% to 60%, carried forward for both Ironwood, which has a TDP of 600W <span class="citation" data-cites="sharma2025aiacceleratorslargelanguage">(<a href="#ref-sharma2025aiacceleratorslargelanguage" role="doc-biblioref">Sharma 2025</a>)</span> and v6e, which has a TDP of 300W.</p>
+<p>For hardware generation, models released before November 2025 are assumed deployed on Trillium (v6e) only, since it was the generation in general availability; models released November 2025 or later are assumed deployed on a v6e/Ironwood mix, since Ironwood reached general availability that month. Assumed TPU pod size is scaled to the model capability tier, using the same size-class reasoning as the rest of the pipeline. Flash-Lite (comparable in role to the mini/nano/Haiku tier) is assumed deployed on 2 to 8 TPUs, Flash on 4 to 16, and Pro (the largest, most capability-dense tier) on 8 to 16 kept intentionally wide given that no real deployment configurations are directly observed.</p>
+<p>Additionally, since higher batch sizes are correlated with lower TPS and higher power draw, we use a Gaussian copula to formalize these correlations. Utilization is positively correlated with batch size (higher concurrent load draws more power), throughput is negatively correlated (more concurrent requests lowers tokens per second), and input-token latency is positively correlated (more concurrent requests slows time-to-first-token). Correlation strength itself is redrawn from a 40-60% range on every iteration rather than fixed. Accelerator count and accelerator type remain independent, drawn uniformly from the tier’s allowed pool.</p>
+<p>That leaves batch size as the one quantity with no range to draw on. We calibrate it against Gemini 2.0 Flash by holding utilization (30-60%), chip count (4-16, Flash tier), accelerator type (v6e only, pre-November-2025), and 2.0 Flash’s own published Artificial Analysis throughput fixed to the ranges above; we solve for the batch size range that reproduces Google’s disclosed 0.14 Wh accelerator-energy figure, giving us a range of 4 to 32 concurrent requests.</p>
+<p>We treat Gemini 2.0 Flash as the model behind Google’s disclosed figure because it is the most plausible median-ranked model under Google’s own reporting method. Google computes average energy per prompt separately for each model, ranks models by that value, and reports the figure for whichever model serves the 50th-percentile prompt along that ranking so the figure reflects one model’s mean, not a blend across models. 2.0 Flash was the Gemini Apps default for the majority of the disclosure month, giving it the largest share of prompt volume and making it the natural candidate to sit at the ranking’s median. Since Gemini 2.0 Flash is a non-reasoning variant, we calibrate our values based on 300 input tokens and 1000 output tokens as a conservative estimate.</p>
+<p>For models deployed on Ironwood rather than v6e, Google’s disclosure predates Ironwood’s general availability, so there is no production figure to calibrate against for that generation. We know Ironwood represents a substantial generational improvement over v6e across the board by roughly 2.5x the peak compute, 6x the HBM capacity, and 4.5x the HBM bandwidth <span class="citation" data-cites="tpu6e tpu7">(<a href="#ref-tpu6e" role="doc-biblioref">Google Cloud 2025</a>, <a href="#ref-tpu7" role="doc-biblioref">2026</a>)</span>. Since LLM decode is memory-bandwidth-bound rather than compute-bound, each decode step streams the full model weights plus every sequence’s KV-cache out of HBM, so throughput is constrained by how fast that data can move, not by raw FLOPs. In other words, higher bandwidth is what actually allows a chip to sustain a larger batch before throughput degrades. We therefore scale the calibrated v6e batch range by 4.5x as a proxy in the absence of a disclosure from Google regarding these accelerators, giving us a range of 18 to 144 concurrent requests.</p>
+</section>
+<section id="bibliography" class="level1 unnumbered">
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Bibliography</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-agarwal2025gpt" class="csl-entry" role="listitem">
+<span class="nocase">Agarwal, Sandhini et al.</span> 2025. <em>Gpt-Oss-120b &amp; Gpt-Oss-20b Model Card</em>. <a href="https://arxiv.org/abs/2508.10925">https://arxiv.org/abs/2508.10925</a>.
+</div>
+<div id="ref-lai2026minimaxsparseattention" class="csl-entry" role="listitem">
+<span class="nocase">Chen, Aili et al.</span> 2026. <em>The <span>MiniMax-M2</span> Series: Mini Activations Unleashing Max Real-World Intelligence</em>. <a href="https://arxiv.org/abs/2605.26494">https://arxiv.org/abs/2605.26494</a>.
+</div>
+<div id="ref-deepseekai2025deepseekv3technicalreport" class="csl-entry" role="listitem">
+DeepSeek-AI. 2024. <em><span>DeepSeek-V3</span> Technical Report</em>. <a href="https://arxiv.org/abs/2412.19437">https://arxiv.org/abs/2412.19437</a>.
+</div>
+<div id="ref-delavande2026" class="csl-entry" role="listitem">
+Delavande, Julien, Regis Pierrard, and Sasha Luccioni. 2026. <em>Understanding Efficiency: Quantization, Batching, and Serving Strategies in <span>LLM</span> Energy Use</em>. <a href="https://arxiv.org/abs/2601.22362">https://arxiv.org/abs/2601.22362</a>.
+</div>
+<div id="ref-elsworth2025measuringenvironmentalimpactdelivering" class="csl-entry" role="listitem">
+Elsworth, Cooper, Keguo Huang, David Patterson, et al. 2025. <em>Measuring the Environmental Impact of Delivering <span>AI</span> at <span>Google</span> Scale</em>. <a href="https://arxiv.org/abs/2508.15734">https://arxiv.org/abs/2508.15734</a>.
+</div>
+<div id="ref-gemmateam2026gemma4technicalreport" class="csl-entry" role="listitem">
+Gemma Team. 2026. <em><span>Gemma 4</span> Technical Report</em>. <a href="https://arxiv.org/abs/2607.02770">https://arxiv.org/abs/2607.02770</a>.
+</div>
+<div id="ref-5team2025glm45agenticreasoningcoding" class="csl-entry" role="listitem">
+GLM-4.5 Team. 2025. <em><span>GLM-4.5</span>: Agentic, Reasoning, and Coding (<span>ARC</span>) Foundation Models</em>. <a href="https://arxiv.org/abs/2508.06471">https://arxiv.org/abs/2508.06471</a>.
+</div>
+<div id="ref-glm5team2026glm5vibecodingagentic" class="csl-entry" role="listitem">
+GLM-5 Team. 2026. <em><span>GLM-5</span>: From Vibe Coding to Agentic Engineering</em>. <a href="https://arxiv.org/abs/2602.15763">https://arxiv.org/abs/2602.15763</a>.
+</div>
+<div id="ref-tpu6e" class="csl-entry" role="listitem">
+Google Cloud. 2025. <em><span class="nocase">TPU v6e</span></em>. Cloud TPU documentation. <a href="https://docs.cloud.google.com/tpu/docs/v6e">https://docs.cloud.google.com/tpu/docs/v6e</a>.
+</div>
+<div id="ref-tpu7" class="csl-entry" role="listitem">
+Google Cloud. 2026. <em><span>TPU7x</span> (<span>Ironwood</span>)</em>. Cloud TPU documentation. <a href="https://docs.cloud.google.com/tpu/docs/tpu7x">https://docs.cloud.google.com/tpu/docs/tpu7x</a>.
+</div>
+<div id="ref-gul2026energy" class="csl-entry" role="listitem">
+Gül, Fatih. 2026. <span>“Energy Efficiency of <span>AI</span> Hardware: A Systematic Review of <span>GPU</span>, <span>TPU</span>, and <span>NPU</span> Architectures in the <span>LLM</span> Era.”</span> <em>Journal of King Saud University Computer and Information Sciences</em> 38 (6): 499. <a href="https://doi.org/10.1007/s44443-026-00900-6">https://doi.org/10.1007/s44443-026-00900-6</a>.
+</div>
+<div id="ref-jiang2024mixtral" class="csl-entry" role="listitem">
+Jiang, Albert Q., Alexandre Sablayrolles, Antoine Roux, et al. 2024. <em>Mixtral of Experts</em>. <a href="https://arxiv.org/abs/2401.04088">https://arxiv.org/abs/2401.04088</a>.
+</div>
+<div id="ref-jouppi2021ten" class="csl-entry" role="listitem">
+Jouppi, Norman P., Doe Hyun Yoon, Matthew Ashcraft, et al. 2021. <span>“Ten Lessons from Three Generations Shaped <span class="nocase">Google’s TPUv4i</span>: Industrial Product.”</span> <em>2021 ACM/IEEE 48th Annual International Symposium on Computer Architecture (ISCA)</em>, 1–14. <a href="https://doi.org/10.1109/ISCA52012.2021.00010">https://doi.org/10.1109/ISCA52012.2021.00010</a>.
+</div>
+<div id="ref-kimiteam2026kimik3openfrontier" class="csl-entry" role="listitem">
+Kimi Team. 2026. <em><span>Kimi K3</span>: Open Frontier Intelligence</em>. <a href="https://arxiv.org/abs/2607.24653">https://arxiv.org/abs/2607.24653</a>.
+</div>
+<div id="ref-tpuVgpu2026" class="csl-entry" role="listitem">
+Peterson, Carl. 2026. <em><span>TPU</span> Vs <span>GPU</span>: Which to Use for <span>AI</span>?</em> Thunder Compute blog. <a href="https://www.thundercompute.com/blog/tpu-vs-gpu-for-ai">https://www.thundercompute.com/blog/tpu-vs-gpu-for-ai</a>.
+</div>
+<div id="ref-qwen3technicalreport" class="csl-entry" role="listitem">
+Qwen Team. 2025. <em><span>Qwen3</span> Technical Report</em>. <a href="https://arxiv.org/abs/2505.09388">https://arxiv.org/abs/2505.09388</a>.
+</div>
+<div id="ref-qwen35" class="csl-entry" role="listitem">
+Qwen Team. 2026. <em><span>Qwen3.5-Omni</span> Technical Report</em>. <a href="https://arxiv.org/abs/2604.15804">https://arxiv.org/abs/2604.15804</a>.
+</div>
+<div id="ref-schneider2025lifecycleemissionsaihardware" class="csl-entry" role="listitem">
+Schneider, Ian, Hui Xu, Stephan Benecke, et al. 2025. <em>Life-Cycle Emissions of <span>AI</span> Hardware: A Cradle-to-Grave Approach and Generational Trends</em>. <a href="https://arxiv.org/abs/2502.01671">https://arxiv.org/abs/2502.01671</a>.
+</div>
+<div id="ref-sharma2025aiacceleratorslargelanguage" class="csl-entry" role="listitem">
+Sharma, Amit. 2025. <em><span>AI</span> Accelerators for Large Language Model Inference: Architecture Analysis and Scaling Strategies</em>. <a href="https://arxiv.org/abs/2506.00008">https://arxiv.org/abs/2506.00008</a>.
+</div>
+<div id="ref-blackwell2024" class="csl-entry" role="listitem">
+Shilov, Anton. 2024. <em>Nvidia Will Reportedly Start <span>Blackwell</span> Server Deliveries in Early <span>December</span> — the First Servers Will Go to <span>Microsoft</span></em>. Tom’s Hardware. <a href="https://www.tomshardware.com/pc-components/gpus/nvidia-will-reportedly-start-blackwell-server-deliveries-in-early-december-the-first-servers-will-go-to-microsoft">https://www.tomshardware.com/pc-components/gpus/nvidia-will-reportedly-start-blackwell-server-deliveries-in-early-december-the-first-servers-will-go-to-microsoft</a>.
+</div>
+<div id="ref-yang2025qwen3technicalreport" class="csl-entry" role="listitem">
+<span class="nocase">Yang, An, Anfeng Li, Baosong Yang, et al.</span> 2025. <em><span>Qwen3</span> Technical Report</em>. <a href="https://arxiv.org/abs/2505.09388">https://arxiv.org/abs/2505.09388</a>.
+</div>
+<div id="ref-zuo2025servinglargelanguagemodels" class="csl-entry" role="listitem">
+<span class="nocase">Zuo, Pengfei et al.</span> 2025. <em>Serving Large Language Models on <span>Huawei CloudMatrix384</span></em>. <a href="https://arxiv.org/abs/2506.12708">https://arxiv.org/abs/2506.12708</a>.
+</div>
+</div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>H100 and A40 accelerators were also deployed for specific rounds of testing described in Section 3.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>We note that some Anthropic models either lack a score on the Omniscience benchmark (such as Opus 3 and 4 and Haiku 3.5). Therefore, we rely on a fallback to their most recent Anthropic sibling, using their active parameter count (Opus 4 falls back to Opus 4.1, etc.).<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main>
+<!-- /main column -->
+<script src="report-polish.js"></script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="index_files/libs/quarto-html/zenscroll-min.js"></script>
+<script src="/CLEER-Tech-Report/version-banner.js" defer></script>
+</body></html>

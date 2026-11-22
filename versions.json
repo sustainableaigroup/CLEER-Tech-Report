@@ -1,0 +1,18 @@
+{
+  "report": "CLEER Technical Report",
+  "series": "CLEER-Text",
+  "latest": "0926",
+  "concept_doi": "10.5281/zenodo.24439483",
+  "versions": [
+    {
+      "code": "0926",
+      "id": "CLEER-Text-0926",
+      "date": "2026-09-29",
+      "url": "/CLEER-Tech-Report/0926/",
+      "pdf": "/CLEER-Tech-Report/0926/CLEER-Text-0926.pdf",
+      "doi": "10.5281/zenodo.24439484",
+      "changelog": null,
+      "cleer_factor_release": "0926"
+    }
+  ]
+}

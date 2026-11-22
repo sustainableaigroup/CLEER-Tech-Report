@@ -11,6 +11,7 @@ report:
   version: "CLEER-Text-0926"
   date: "29 SEPTEMBER 2026"
   pdf-file: "CLEER-Text-0926.pdf"
+  permalink: "https://reports.sustainableaigroup.com/CLEER-Tech-Report/0926/"
 
 bibliography: references.bib
 lightbox: true
@@ -43,7 +44,7 @@ format:
       <p>Jegham, N., Koh, C. Y., Gamazaychikov, B., &amp; Luccioni, S. (2026).
         <em>CLEER: Closed-model Latent Energy Estimation Range. Technical Report.</em>
         Sustainable AI Group. Version CLEER-Text-0926.
-        <a href="https://reports.sustainableaigroup.com/CLEER-Tech-Report/">https://reports.sustainableaigroup.com/CLEER-Tech-Report/</a>
+        <a href="{{< meta report.permalink >}}">{{< meta report.permalink >}}</a>
       </p>
   
       <strong>BibTeX</strong>
@@ -54,7 +55,7 @@ format:
     year         = {2026},
     month        = sep,
     note         = {Version CLEER-Text-0926},
-    url          = {https://reports.sustainableaigroup.com/CLEER-Tech-Report/}
+    url          = &#123;{{< meta report.permalink >}}&#125;
   }</pre>
       <button type="button" class="saig-cite-copy"
         onclick="navigator.clipboard.writeText(document.getElementById('saig-bibtex').textContent).then(() => this.textContent = 'Copied')">

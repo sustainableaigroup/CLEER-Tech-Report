@@ -1,0 +1,25 @@
+CLEER-Text-0926 archive: provenance
+===================================
+
+Version:    CLEER-Text-0926 (CLEER Technical Report)
+Published:  29 September 2026; reference list corrected 4 October 2026
+Source:     git tag CLEER-Text-0926, commit 672ce22 (report content identical
+            to the corrected version live from 4 October 2026)
+DOI:        10.5281/zenodo.24439484
+Frozen:     22 November 2026
+
+HTML: rendered from the tagged source with Quarto 1.10.19, the version used for
+the production builds of 4 and 8 October 2026. Checked against the live page:
+the page text matches, apart from math, which is typeset in the browser.
+
+Post-freeze edits to index.html (the only changes to the rendered output):
+  1. Citation URL changed from /CLEER-Tech-Report/ to /CLEER-Tech-Report/0926/
+     so that citations of this version keep resolving to this version.
+  2. One <script> tag loading /CLEER-Tech-Report/version-banner.js (version
+     switcher, DOI and "superseded" notice).
+
+PDF: CLEER-Text-0926.pdf is the production build of 8 October 2026, with the
+corrected reference list.
+
+Integrity: SHA256SUMS lists every file in this folder. The deploy workflow
+verifies it on every build and fails if any archived file has changed.
