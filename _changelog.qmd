@@ -1,0 +1,35 @@
+<!--
+This annex is the authoritative change record for this report (see VERSIONING.md).
+Change IDs: CMMYY-NN. Types: Method, Data, Clarification, Editorial.
+Method and Data changes also get a ::: {.change} block where they occur in the text.
+Effect on results: change in per-token energy factors (input/output, by model tier),
+and % change in total kgCO2e on the CAIEC reference inventory.
+-->
+
+## B.1 Factor Releases {#b.1-factor-releases}
+
+Each version of this report describes the method behind one release of CLEER per-token accelerator energy factors. The Closed AI Emissions Calculation (CAIEC) version designed for the same factors is listed alongside.
+
+| Report version | Published | CLEER factor release | CAIEC version | Status |
+|---|---|---|---|---|
+| CLEER-Text-1226 | December 2026 | 1226 | CAIEC-1226 | Latest |
+| CLEER-Text-0926 | 29 September 2026 | 0926 | CAIEC-0926 | Superseded |
+: Report versions, factor releases and companion calculation versions. {#tbl-version-compatibility tbl-colwidths="[22,20,18,20,20]"}
+
+## B.2 Changes in CLEER-Text-1226 {#b.2-changes-in-cleer-text-1226}
+
+Changes from CLEER-Text-0926. The combined effect of this release is [summary of factor changes] and [X]% in total kgCO₂e on the CAIEC reference inventory.
+
+| ID | Section | Type | Trigger | Change | Effect on results |
+|---|---|---|---|---|---|
+| C1226-01 | §[x.x] | [Method / Data / Clarification / Editorial] | [Benchmark round, disclosure or study] | [Before → after] | [Factor change; ±X% / none] |
+: Changes in CLEER-Text-1226. {#tbl-changes-1226 tbl-colwidths="[10,10,12,18,30,20]"}
+
+A line-by-line comparison of the two versions is available at <https://github.com/sustainableaigroup/CLEER-Tech-Report/compare/CLEER-Text-0926...CLEER-Text-1226>.
+
+## B.3 Earlier Versions {#b.3-earlier-versions}
+
+| Version | Published | Summary | Permanent URL | DOI |
+|---|---|---|---|---|
+| CLEER-Text-0926 | 29 September 2026 | Initial public release (reference list corrected 4 October 2026) | <https://reports.sustainableaigroup.com/CLEER-Tech-Report/0926/> | [10.5281/zenodo.24439484](https://doi.org/10.5281/zenodo.24439484) |
+: Earlier versions of this report. {#tbl-earlier-versions tbl-colwidths="[13,15,20,30,22]"}

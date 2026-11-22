@@ -34,7 +34,7 @@ Every change between versions gets an identifier, `CMMYY-NN` (for example `C1226
 
 Each change record states the section, the type, the trigger (the review, disclosure or study that prompted it), the before and after values, and the effect on results. The effect is reported as the change in per-token energy factors (input and output, by model) and as the percentage change in total kgCO₂e on the fixed reference inventory used by the Closed AI Emissions Calculation, so that effects are comparable across releases. Records also say whether the change is likely to be significant enough to prompt recalculation of previously reported periods.
 
-The full record is the Version History annex in the report, written in `_changelog.qmd`, so the PDF carries it. GitHub release notes summarize it and link to the line-by-line comparison between tags (`/compare/CLEER-Text-0926...CLEER-Text-1226`).
+The full record is the Version History annex (Annex B) in the report, written in `_changelog.qmd`, so the PDF carries it. GitHub release notes summarize it and link to the line-by-line comparison between tags (`/compare/CLEER-Text-0926...CLEER-Text-1226`).
 
 Method and Data changes are also marked where they occur in the text with a `.change` block, which renders as a "Changed in MMYY" badge in the web version (with a link to the same section in the previous version) and as a marked note in the PDF. Badges only cover changes since the previous version; older history lives in Annex F.
 
